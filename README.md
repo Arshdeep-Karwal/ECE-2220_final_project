@@ -3,5 +3,5 @@
 #### Collaborators:
 * [Arshdeep Singh Karwal](https://github.com/Arshdeep-Karwal)
 * [Dev Patel](https://github.com/Dev-Patel4)
-* [Gundeep Sidhu]()
-* [Matthew Readman]()
+* [Gundeep Sidhu](https://github.com/gdsidhu)
+* [Matthew Readman](https://github.com/ducktree-embed)
