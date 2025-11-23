@@ -2,11 +2,9 @@
 clk => clk.IN1
 rst_n => LED0~reg0.DATAIN
 rst_n => LED9.OUTPUTSELECT
-rst_n => sense_hold.ENA
+rst_n => sense_hold.OUTPUTSELECT
 sense => always1.IN1
 sense => sense_hold.DATAB
-sense => sense_hold.OUTPUTSELECT
-sense => LED9.OUTPUTSELECT
 LED0 <= LED0~reg0.DB_MAX_OUTPUT_PORT_TYPE
 LED9 <= LED9~reg0.DB_MAX_OUTPUT_PORT_TYPE
 

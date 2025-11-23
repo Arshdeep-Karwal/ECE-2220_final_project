@@ -1,5 +1,5 @@
 Timing Analyzer report for DE10_Standard_TV
-Sun Nov 23 01:13:02 2025
+Sun Nov 23 14:02:20 2025
 Quartus Prime Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
 
 
@@ -100,27 +100,17 @@ on the Quartus Prime software download page.
 +----------------------------+-------------+
 ; Processors                 ; Number      ;
 +----------------------------+-------------+
-; Number detected on machine ; 20          ;
-; Maximum allowed            ; 14          ;
+; Number detected on machine ; 8           ;
+; Maximum allowed            ; 4           ;
 ;                            ;             ;
-; Average used               ; 1.51        ;
-; Maximum used               ; 14          ;
+; Average used               ; 1.43        ;
+; Maximum used               ; 4           ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;   4.3%      ;
-;     Processor 3            ;   4.2%      ;
-;     Processor 4            ;   4.1%      ;
-;     Processor 5            ;   3.9%      ;
-;     Processor 6            ;   3.9%      ;
-;     Processor 7            ;   3.9%      ;
-;     Processor 8            ;   3.9%      ;
-;     Processor 9            ;   3.8%      ;
-;     Processor 10           ;   3.8%      ;
-;     Processor 11           ;   3.8%      ;
-;     Processor 12           ;   3.8%      ;
-;     Processor 13           ;   3.8%      ;
-;     Processor 14           ;   3.8%      ;
+;     Processor 2            ;  14.4%      ;
+;     Processor 3            ;  14.3%      ;
+;     Processor 4            ;  14.2%      ;
 +----------------------------+-------------+
 
 
@@ -129,7 +119,7 @@ on the Quartus Prime software download page.
 +----------------------+--------+--------------------------+
 ; SDC File Path        ; Status ; Read at                  ;
 +----------------------+--------+--------------------------+
-; DE10_Standard_TV.sdc ; OK     ; Sun Nov 23 01:12:58 2025 ;
+; DE10_Standard_TV.sdc ; OK     ; Sun Nov 23 14:02:15 2025 ;
 +----------------------+--------+--------------------------+
 
 
@@ -148,15 +138,15 @@ on the Quartus Prime software download page.
 +-------------------------------------------------------------------------------------+-----------+--------+-----------+--------+--------+------------+-----------+-------------+--------+--------+-----------+------------+----------+-------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------+
 
 
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Slow 1100mV 85C Model Fmax Summary                                                                                                                                  ;
-+------------+-----------------+-------------------------------------------------------------------------------------+------------------------------------------------+
-; Fmax       ; Restricted Fmax ; Clock Name                                                                          ; Note                                           ;
-+------------+-----------------+-------------------------------------------------------------------------------------+------------------------------------------------+
-; 149.05 MHz ; 149.05 MHz      ; TD_CLK27                                                                            ;                                                ;
-; 256.67 MHz ; 256.67 MHz      ; CLOCK_50                                                                            ;                                                ;
-; 332.12 MHz ; 315.06 MHz      ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; limit due to minimum period restriction (tmin) ;
-+------------+-----------------+-------------------------------------------------------------------------------------+------------------------------------------------+
++---------------------------------------------------------------------------------------------------------------------------+
+; Slow 1100mV 85C Model Fmax Summary                                                                                        ;
++------------+-----------------+-------------------------------------------------------------------------------------+------+
+; Fmax       ; Restricted Fmax ; Clock Name                                                                          ; Note ;
++------------+-----------------+-------------------------------------------------------------------------------------+------+
+; 70.53 MHz  ; 70.53 MHz       ; TD_CLK27                                                                            ;      ;
+; 157.43 MHz ; 157.43 MHz      ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ;      ;
+; 226.81 MHz ; 226.81 MHz      ; CLOCK_50                                                                            ;      ;
++------------+-----------------+-------------------------------------------------------------------------------------+------+
 This panel reports FMAX for every clock in the design, regardless of the user-specified clock periods.  FMAX is only computed for paths where the source and destination registers or ports are driven by the same clock.  Paths of different clocks, including generated clocks, are ignored.  For paths between a clock and its inversion, FMAX is computed as if the rising and falling edges are scaled along with FMAX, such that the duty cycle (in terms of a percentage) is maintained. Altera recommends that you always use clock constraints and other slack reports for sign-off analysis.
 
 
@@ -171,10 +161,10 @@ HTML report is unavailable in plain text report export.
 +-------------------------------------------------------------------------------------+--------+---------------+
 ; Clock                                                                               ; Slack  ; End Point TNS ;
 +-------------------------------------------------------------------------------------+--------+---------------+
-; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; -1.374 ; -20.105       ;
-; clk_dram_ext                                                                        ; 0.511  ; 0.000         ;
-; CLOCK_50                                                                            ; 16.104 ; 0.000         ;
-; TD_CLK27                                                                            ; 30.328 ; 0.000         ;
+; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; -1.639 ; -21.604       ;
+; clk_dram_ext                                                                        ; -0.301 ; -0.539        ;
+; TD_CLK27                                                                            ; 10.867 ; 0.000         ;
+; CLOCK_50                                                                            ; 15.591 ; 0.000         ;
 +-------------------------------------------------------------------------------------+--------+---------------+
 
 
@@ -183,10 +173,10 @@ HTML report is unavailable in plain text report export.
 +-------------------------------------------------------------------------------------+-------+---------------+
 ; Clock                                                                               ; Slack ; End Point TNS ;
 +-------------------------------------------------------------------------------------+-------+---------------+
-; TD_CLK27                                                                            ; 0.282 ; 0.000         ;
-; CLOCK_50                                                                            ; 0.373 ; 0.000         ;
-; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 0.505 ; 0.000         ;
-; clk_dram_ext                                                                        ; 1.320 ; 0.000         ;
+; TD_CLK27                                                                            ; 0.294 ; 0.000         ;
+; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 0.367 ; 0.000         ;
+; CLOCK_50                                                                            ; 0.375 ; 0.000         ;
+; clk_dram_ext                                                                        ; 1.160 ; 0.000         ;
 +-------------------------------------------------------------------------------------+-------+---------------+
 
 
@@ -195,7 +185,7 @@ HTML report is unavailable in plain text report export.
 +----------+--------+--------------------+
 ; Clock    ; Slack  ; End Point TNS      ;
 +----------+--------+--------------------+
-; TD_CLK27 ; 35.231 ; 0.000              ;
+; TD_CLK27 ; 35.432 ; 0.000              ;
 +----------+--------+--------------------+
 
 
@@ -204,7 +194,7 @@ HTML report is unavailable in plain text report export.
 +----------+-------+--------------------+
 ; Clock    ; Slack ; End Point TNS      ;
 +----------+-------+--------------------+
-; TD_CLK27 ; 0.536 ; 0.000              ;
+; TD_CLK27 ; 0.373 ; 0.000              ;
 +----------+-------+--------------------+
 
 
@@ -214,10 +204,10 @@ HTML report is unavailable in plain text report export.
 ; Clock                                                                               ; Slack  ; End Point TNS ;
 +-------------------------------------------------------------------------------------+--------+---------------+
 ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]   ; 0.555  ; 0.000         ;
-; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 3.764  ; 0.000         ;
+; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 3.768  ; 0.000         ;
 ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk ; 4.831  ; 0.000         ;
-; CLOCK_50                                                                            ; 9.218  ; 0.000         ;
-; TD_CLK27                                                                            ; 17.392 ; 0.000         ;
+; CLOCK_50                                                                            ; 8.881  ; 0.000         ;
+; TD_CLK27                                                                            ; 17.390 ; 0.000         ;
 +-------------------------------------------------------------------------------------+--------+---------------+
 
 
@@ -227,10 +217,10 @@ HTML report is unavailable in plain text report export.
 Worst-Case MTBF of Design is 1e+09 years or 3.15e+16 seconds.
 Typical MTBF of Design is 1e+09 years or 3.15e+16 seconds.
 
-Number of Synchronizer Chains Found: 21
+Number of Synchronizer Chains Found: 89
 Shortest Synchronizer Chain: 2 Registers
-Fraction of Chains for which MTBFs Could Not be Calculated: 0.048
-Worst Case Available Settling Time: 68.316 ns
+Fraction of Chains for which MTBFs Could Not be Calculated: 0.326
+Worst Case Available Settling Time: 10.270 ns
 
 Worst-Case MTBF values are calculated based on the worst-case silicon characteristics, with worst-case operating conditions.
   - Under worst-case conditions, an increase of 100ps in available settling time will increase MTBF values by a factor of 79.4
@@ -239,15 +229,15 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 
 
 
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Slow 1100mV 0C Model Fmax Summary                                                                                                                                   ;
-+------------+-----------------+-------------------------------------------------------------------------------------+------------------------------------------------+
-; Fmax       ; Restricted Fmax ; Clock Name                                                                          ; Note                                           ;
-+------------+-----------------+-------------------------------------------------------------------------------------+------------------------------------------------+
-; 146.61 MHz ; 146.61 MHz      ; TD_CLK27                                                                            ;                                                ;
-; 259.81 MHz ; 259.81 MHz      ; CLOCK_50                                                                            ;                                                ;
-; 349.16 MHz ; 315.06 MHz      ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; limit due to minimum period restriction (tmin) ;
-+------------+-----------------+-------------------------------------------------------------------------------------+------------------------------------------------+
++---------------------------------------------------------------------------------------------------------------------------+
+; Slow 1100mV 0C Model Fmax Summary                                                                                         ;
++------------+-----------------+-------------------------------------------------------------------------------------+------+
+; Fmax       ; Restricted Fmax ; Clock Name                                                                          ; Note ;
++------------+-----------------+-------------------------------------------------------------------------------------+------+
+; 70.11 MHz  ; 70.11 MHz       ; TD_CLK27                                                                            ;      ;
+; 161.45 MHz ; 161.45 MHz      ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ;      ;
+; 220.41 MHz ; 220.41 MHz      ; CLOCK_50                                                                            ;      ;
++------------+-----------------+-------------------------------------------------------------------------------------+------+
 This panel reports FMAX for every clock in the design, regardless of the user-specified clock periods.  FMAX is only computed for paths where the source and destination registers or ports are driven by the same clock.  Paths of different clocks, including generated clocks, are ignored.  For paths between a clock and its inversion, FMAX is computed as if the rising and falling edges are scaled along with FMAX, such that the duty cycle (in terms of a percentage) is maintained. Altera recommends that you always use clock constraints and other slack reports for sign-off analysis.
 
 
@@ -256,10 +246,10 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +-------------------------------------------------------------------------------------+--------+---------------+
 ; Clock                                                                               ; Slack  ; End Point TNS ;
 +-------------------------------------------------------------------------------------+--------+---------------+
-; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; -1.031 ; -14.766       ;
-; clk_dram_ext                                                                        ; 0.626  ; 0.000         ;
-; CLOCK_50                                                                            ; 16.151 ; 0.000         ;
-; TD_CLK27                                                                            ; 30.216 ; 0.000         ;
+; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; -1.313 ; -16.346       ;
+; clk_dram_ext                                                                        ; -0.197 ; -0.197        ;
+; TD_CLK27                                                                            ; 11.110 ; 0.000         ;
+; CLOCK_50                                                                            ; 15.463 ; 0.000         ;
 +-------------------------------------------------------------------------------------+--------+---------------+
 
 
@@ -268,10 +258,10 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +-------------------------------------------------------------------------------------+-------+---------------+
 ; Clock                                                                               ; Slack ; End Point TNS ;
 +-------------------------------------------------------------------------------------+-------+---------------+
-; TD_CLK27                                                                            ; 0.180 ; 0.000         ;
-; CLOCK_50                                                                            ; 0.373 ; 0.000         ;
-; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 0.382 ; 0.000         ;
-; clk_dram_ext                                                                        ; 1.381 ; 0.000         ;
+; TD_CLK27                                                                            ; 0.177 ; 0.000         ;
+; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 0.309 ; 0.000         ;
+; CLOCK_50                                                                            ; 0.376 ; 0.000         ;
+; clk_dram_ext                                                                        ; 1.161 ; 0.000         ;
 +-------------------------------------------------------------------------------------+-------+---------------+
 
 
@@ -280,7 +270,7 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +----------+--------+-------------------+
 ; Clock    ; Slack  ; End Point TNS     ;
 +----------+--------+-------------------+
-; TD_CLK27 ; 35.337 ; 0.000             ;
+; TD_CLK27 ; 35.533 ; 0.000             ;
 +----------+--------+-------------------+
 
 
@@ -289,7 +279,7 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +----------+-------+-------------------+
 ; Clock    ; Slack ; End Point TNS     ;
 +----------+-------+-------------------+
-; TD_CLK27 ; 0.450 ; 0.000             ;
+; TD_CLK27 ; 0.306 ; 0.000             ;
 +----------+-------+-------------------+
 
 
@@ -299,10 +289,10 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 ; Clock                                                                               ; Slack  ; End Point TNS ;
 +-------------------------------------------------------------------------------------+--------+---------------+
 ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]   ; 0.555  ; 0.000         ;
-; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 3.745  ; 0.000         ;
+; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 3.748  ; 0.000         ;
 ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk ; 4.794  ; 0.000         ;
-; CLOCK_50                                                                            ; 9.278  ; 0.000         ;
-; TD_CLK27                                                                            ; 17.428 ; 0.000         ;
+; CLOCK_50                                                                            ; 8.848  ; 0.000         ;
+; TD_CLK27                                                                            ; 17.427 ; 0.000         ;
 +-------------------------------------------------------------------------------------+--------+---------------+
 
 
@@ -312,10 +302,10 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 Worst-Case MTBF of Design is 1e+09 years or 3.15e+16 seconds.
 Typical MTBF of Design is 1e+09 years or 3.15e+16 seconds.
 
-Number of Synchronizer Chains Found: 21
+Number of Synchronizer Chains Found: 89
 Shortest Synchronizer Chain: 2 Registers
-Fraction of Chains for which MTBFs Could Not be Calculated: 0.048
-Worst Case Available Settling Time: 68.574 ns
+Fraction of Chains for which MTBFs Could Not be Calculated: 0.326
+Worst Case Available Settling Time: 10.433 ns
 
 Worst-Case MTBF values are calculated based on the worst-case silicon characteristics, with worst-case operating conditions.
   - Under worst-case conditions, an increase of 100ps in available settling time will increase MTBF values by a factor of 5.2
@@ -329,10 +319,10 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 +-------------------------------------------------------------------------------------+--------+---------------+
 ; Clock                                                                               ; Slack  ; End Point TNS ;
 +-------------------------------------------------------------------------------------+--------+---------------+
-; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 1.769  ; 0.000         ;
-; clk_dram_ext                                                                        ; 1.981  ; 0.000         ;
-; CLOCK_50                                                                            ; 17.681 ; 0.000         ;
-; TD_CLK27                                                                            ; 33.240 ; 0.000         ;
+; clk_dram_ext                                                                        ; 1.517  ; 0.000         ;
+; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 1.654  ; 0.000         ;
+; TD_CLK27                                                                            ; 11.877 ; 0.000         ;
+; CLOCK_50                                                                            ; 17.250 ; 0.000         ;
 +-------------------------------------------------------------------------------------+--------+---------------+
 
 
@@ -341,10 +331,10 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 +-------------------------------------------------------------------------------------+-------+---------------+
 ; Clock                                                                               ; Slack ; End Point TNS ;
 +-------------------------------------------------------------------------------------+-------+---------------+
-; TD_CLK27                                                                            ; 0.181 ; 0.000         ;
-; CLOCK_50                                                                            ; 0.185 ; 0.000         ;
-; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 0.297 ; 0.000         ;
-; clk_dram_ext                                                                        ; 2.165 ; 0.000         ;
+; TD_CLK27                                                                            ; 0.178 ; 0.000         ;
+; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 0.180 ; 0.000         ;
+; CLOCK_50                                                                            ; 0.201 ; 0.000         ;
+; clk_dram_ext                                                                        ; 1.990 ; 0.000         ;
 +-------------------------------------------------------------------------------------+-------+---------------+
 
 
@@ -353,7 +343,7 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 +----------+--------+--------------------+
 ; Clock    ; Slack  ; End Point TNS      ;
 +----------+--------+--------------------+
-; TD_CLK27 ; 35.804 ; 0.000              ;
+; TD_CLK27 ; 35.966 ; 0.000              ;
 +----------+--------+--------------------+
 
 
@@ -362,7 +352,7 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 +----------+-------+--------------------+
 ; Clock    ; Slack ; End Point TNS      ;
 +----------+-------+--------------------+
-; TD_CLK27 ; 0.301 ; 0.000              ;
+; TD_CLK27 ; 0.195 ; 0.000              ;
 +----------+-------+--------------------+
 
 
@@ -374,8 +364,8 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]   ; 0.555  ; 0.000         ;
 ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 3.884  ; 0.000         ;
 ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk ; 4.903  ; 0.000         ;
-; CLOCK_50                                                                            ; 9.099  ; 0.000         ;
-; TD_CLK27                                                                            ; 16.997 ; 0.000         ;
+; CLOCK_50                                                                            ; 8.799  ; 0.000         ;
+; TD_CLK27                                                                            ; 16.999 ; 0.000         ;
 +-------------------------------------------------------------------------------------+--------+---------------+
 
 
@@ -385,10 +375,10 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 Worst-Case MTBF of Design is 1e+09 years or 3.15e+16 seconds.
 Typical MTBF of Design is 1e+09 years or 3.15e+16 seconds.
 
-Number of Synchronizer Chains Found: 21
+Number of Synchronizer Chains Found: 89
 Shortest Synchronizer Chain: 2 Registers
-Fraction of Chains for which MTBFs Could Not be Calculated: 0.048
-Worst Case Available Settling Time: 70.027 ns
+Fraction of Chains for which MTBFs Could Not be Calculated: 0.326
+Worst Case Available Settling Time: 11.877 ns
 
 Worst-Case MTBF values are calculated based on the worst-case silicon characteristics, with worst-case operating conditions.
   - Under worst-case conditions, an increase of 100ps in available settling time will increase MTBF values by a factor of 79.4
@@ -402,10 +392,10 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 +-------------------------------------------------------------------------------------+--------+---------------+
 ; Clock                                                                               ; Slack  ; End Point TNS ;
 +-------------------------------------------------------------------------------------+--------+---------------+
-; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 2.012  ; 0.000         ;
-; clk_dram_ext                                                                        ; 2.091  ; 0.000         ;
-; CLOCK_50                                                                            ; 17.866 ; 0.000         ;
-; TD_CLK27                                                                            ; 33.454 ; 0.000         ;
+; clk_dram_ext                                                                        ; 1.666  ; 0.000         ;
+; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 1.892  ; 0.000         ;
+; TD_CLK27                                                                            ; 12.260 ; 0.000         ;
+; CLOCK_50                                                                            ; 17.388 ; 0.000         ;
 +-------------------------------------------------------------------------------------+--------+---------------+
 
 
@@ -414,10 +404,10 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 +-------------------------------------------------------------------------------------+-------+---------------+
 ; Clock                                                                               ; Slack ; End Point TNS ;
 +-------------------------------------------------------------------------------------+-------+---------------+
-; TD_CLK27                                                                            ; 0.126 ; 0.000         ;
-; CLOCK_50                                                                            ; 0.176 ; 0.000         ;
-; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 0.197 ; 0.000         ;
-; clk_dram_ext                                                                        ; 2.145 ; 0.000         ;
+; TD_CLK27                                                                            ; 0.114 ; 0.000         ;
+; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 0.169 ; 0.000         ;
+; CLOCK_50                                                                            ; 0.190 ; 0.000         ;
+; clk_dram_ext                                                                        ; 1.941 ; 0.000         ;
 +-------------------------------------------------------------------------------------+-------+---------------+
 
 
@@ -426,7 +416,7 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 +----------+--------+-------------------+
 ; Clock    ; Slack  ; End Point TNS     ;
 +----------+--------+-------------------+
-; TD_CLK27 ; 35.927 ; 0.000             ;
+; TD_CLK27 ; 36.067 ; 0.000             ;
 +----------+--------+-------------------+
 
 
@@ -435,7 +425,7 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 +----------+-------+-------------------+
 ; Clock    ; Slack ; End Point TNS     ;
 +----------+-------+-------------------+
-; TD_CLK27 ; 0.234 ; 0.000             ;
+; TD_CLK27 ; 0.141 ; 0.000             ;
 +----------+-------+-------------------+
 
 
@@ -447,7 +437,7 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]   ; 0.555  ; 0.000         ;
 ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 3.883  ; 0.000         ;
 ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk ; 4.900  ; 0.000         ;
-; CLOCK_50                                                                            ; 9.064  ; 0.000         ;
+; CLOCK_50                                                                            ; 8.754  ; 0.000         ;
 ; TD_CLK27                                                                            ; 16.953 ; 0.000         ;
 +-------------------------------------------------------------------------------------+--------+---------------+
 
@@ -458,10 +448,10 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 Worst-Case MTBF of Design is 1e+09 years or 3.15e+16 seconds.
 Typical MTBF of Design is 1e+09 years or 3.15e+16 seconds.
 
-Number of Synchronizer Chains Found: 21
+Number of Synchronizer Chains Found: 89
 Shortest Synchronizer Chain: 2 Registers
-Fraction of Chains for which MTBFs Could Not be Calculated: 0.048
-Worst Case Available Settling Time: 70.466 ns
+Fraction of Chains for which MTBFs Could Not be Calculated: 0.326
+Worst Case Available Settling Time: 12.026 ns
 
 Worst-Case MTBF values are calculated based on the worst-case silicon characteristics, with worst-case operating conditions.
   - Under worst-case conditions, an increase of 100ps in available settling time will increase MTBF values by a factor of 5.2
@@ -475,19 +465,19 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 +--------------------------------------------------------------------------------------+---------+-------+----------+---------+---------------------+
 ; Clock                                                                                ; Setup   ; Hold  ; Recovery ; Removal ; Minimum Pulse Width ;
 +--------------------------------------------------------------------------------------+---------+-------+----------+---------+---------------------+
-; Worst-case Slack                                                                     ; -1.374  ; 0.126 ; 35.231   ; 0.234   ; 0.555               ;
-;  CLOCK_50                                                                            ; 16.104  ; 0.176 ; N/A      ; N/A     ; 9.064               ;
-;  TD_CLK27                                                                            ; 30.216  ; 0.126 ; 35.231   ; 0.234   ; 16.953              ;
-;  clk_dram_ext                                                                        ; 0.511   ; 1.320 ; N/A      ; N/A     ; N/A                 ;
+; Worst-case Slack                                                                     ; -1.639  ; 0.114 ; 35.432   ; 0.141   ; 0.555               ;
+;  CLOCK_50                                                                            ; 15.463  ; 0.190 ; N/A      ; N/A     ; 8.754               ;
+;  TD_CLK27                                                                            ; 10.867  ; 0.114 ; 35.432   ; 0.141   ; 16.953              ;
+;  clk_dram_ext                                                                        ; -0.301  ; 1.160 ; N/A      ; N/A     ; N/A                 ;
 ;  u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]   ; N/A     ; N/A   ; N/A      ; N/A     ; 0.555               ;
-;  u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; -1.374  ; 0.197 ; N/A      ; N/A     ; 3.745               ;
+;  u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; -1.639  ; 0.169 ; N/A      ; N/A     ; 3.748               ;
 ;  u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk ; N/A     ; N/A   ; N/A      ; N/A     ; 4.794               ;
-; Design-wide TNS                                                                      ; -20.105 ; 0.0   ; 0.0      ; 0.0     ; 0.0                 ;
+; Design-wide TNS                                                                      ; -22.143 ; 0.0   ; 0.0      ; 0.0     ; 0.0                 ;
 ;  CLOCK_50                                                                            ; 0.000   ; 0.000 ; N/A      ; N/A     ; 0.000               ;
 ;  TD_CLK27                                                                            ; 0.000   ; 0.000 ; 0.000    ; 0.000   ; 0.000               ;
-;  clk_dram_ext                                                                        ; 0.000   ; 0.000 ; N/A      ; N/A     ; N/A                 ;
+;  clk_dram_ext                                                                        ; -0.539  ; 0.000 ; N/A      ; N/A     ; N/A                 ;
 ;  u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]   ; N/A     ; N/A   ; N/A      ; N/A     ; 0.000               ;
-;  u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; -20.105 ; 0.000 ; N/A      ; N/A     ; 0.000               ;
+;  u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; -21.604 ; 0.000 ; N/A      ; N/A     ; 0.000               ;
 ;  u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk ; N/A     ; N/A   ; N/A      ; N/A     ; 0.000               ;
 +--------------------------------------------------------------------------------------+---------+-------+----------+---------+---------------------+
 
@@ -632,14 +622,6 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 ; KEY[1]        ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
 ; KEY[2]        ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
 ; KEY[3]        ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
-; TD_DATA[0]    ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
-; TD_DATA[1]    ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
-; TD_DATA[2]    ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
-; TD_DATA[3]    ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
-; TD_DATA[4]    ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
-; TD_DATA[5]    ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
-; TD_DATA[6]    ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
-; TD_DATA[7]    ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
 ; IRDA_RXD      ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
 ; DRAM_DQ[0]    ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
 ; DRAM_DQ[1]    ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
@@ -670,9 +652,17 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 ; SW[9]         ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
 ; TD_CLK27      ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
 ; CLOCK_50      ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
-; TD_HS         ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
 ; KEY[0]        ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; TD_HS         ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
 ; TD_VS         ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; TD_DATA[0]    ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; TD_DATA[1]    ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; TD_DATA[2]    ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; TD_DATA[3]    ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; TD_DATA[4]    ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; TD_DATA[5]    ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; TD_DATA[6]    ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
+; TD_DATA[7]    ; 3.3-V LVTTL  ; 2640 ps         ; 2640 ps         ;
 +---------------+--------------+-----------------+-----------------+
 
 
@@ -1209,12 +1199,16 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 +-------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------+------------+----------+----------+----------+
 ; From Clock                                                                          ; To Clock                                                                            ; RR Paths   ; FR Paths ; RF Paths ; FF Paths ;
 +-------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------+------------+----------+----------+----------+
-; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; clk_dram_ext                                                                        ; 16         ; 0        ; 0        ; 0        ;
-; CLOCK_50                                                                            ; CLOCK_50                                                                            ; 1127       ; 0        ; 0        ; 0        ;
+; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; clk_dram_ext                                                                        ; 85         ; 0        ; 0        ; 0        ;
+; CLOCK_50                                                                            ; CLOCK_50                                                                            ; 1411       ; 0        ; 0        ; 0        ;
 ; CLOCK_50                                                                            ; TD_CLK27                                                                            ; false path ; 0        ; 0        ; 0        ;
-; TD_CLK27                                                                            ; TD_CLK27                                                                            ; 19242      ; 0        ; 0        ; 0        ;
+; TD_CLK27                                                                            ; TD_CLK27                                                                            ; 20072      ; 72       ; 15354    ; 1884     ;
+; tv_27m_ext                                                                          ; TD_CLK27                                                                            ; 0          ; 0        ; 84       ; 0        ;
+; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; TD_CLK27                                                                            ; 30         ; 0        ; 0        ; 0        ;
 ; clk_dram_ext                                                                        ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 16         ; 0        ; 0        ; 0        ;
-; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 48         ; 0        ; 0        ; 0        ;
+; CLOCK_50                                                                            ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; false path ; 0        ; 0        ; 0        ;
+; TD_CLK27                                                                            ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 30         ; 0        ; 0        ; 0        ;
+; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 14514      ; 0        ; 0        ; 0        ;
 +-------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------+------------+----------+----------+----------+
 Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
 
@@ -1224,35 +1218,41 @@ Entries labeled "false path" only account for clock-to-clock false paths and not
 +-------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------+------------+----------+----------+----------+
 ; From Clock                                                                          ; To Clock                                                                            ; RR Paths   ; FR Paths ; RF Paths ; FF Paths ;
 +-------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------+------------+----------+----------+----------+
-; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; clk_dram_ext                                                                        ; 16         ; 0        ; 0        ; 0        ;
-; CLOCK_50                                                                            ; CLOCK_50                                                                            ; 1127       ; 0        ; 0        ; 0        ;
+; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; clk_dram_ext                                                                        ; 85         ; 0        ; 0        ; 0        ;
+; CLOCK_50                                                                            ; CLOCK_50                                                                            ; 1411       ; 0        ; 0        ; 0        ;
 ; CLOCK_50                                                                            ; TD_CLK27                                                                            ; false path ; 0        ; 0        ; 0        ;
-; TD_CLK27                                                                            ; TD_CLK27                                                                            ; 19242      ; 0        ; 0        ; 0        ;
+; TD_CLK27                                                                            ; TD_CLK27                                                                            ; 20072      ; 72       ; 15354    ; 1884     ;
+; tv_27m_ext                                                                          ; TD_CLK27                                                                            ; 0          ; 0        ; 84       ; 0        ;
+; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; TD_CLK27                                                                            ; 30         ; 0        ; 0        ; 0        ;
 ; clk_dram_ext                                                                        ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 16         ; 0        ; 0        ; 0        ;
-; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 48         ; 0        ; 0        ; 0        ;
+; CLOCK_50                                                                            ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; false path ; 0        ; 0        ; 0        ;
+; TD_CLK27                                                                            ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 30         ; 0        ; 0        ; 0        ;
+; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; 14514      ; 0        ; 0        ; 0        ;
 +-------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------+------------+----------+----------+----------+
 Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
 
 
-+---------------------------------------------------------------------+
-; Recovery Transfers                                                  ;
-+------------+----------+------------+----------+----------+----------+
-; From Clock ; To Clock ; RR Paths   ; FR Paths ; RF Paths ; FF Paths ;
-+------------+----------+------------+----------+----------+----------+
-; CLOCK_50   ; TD_CLK27 ; false path ; 0        ; 0        ; 0        ;
-; TD_CLK27   ; TD_CLK27 ; 32         ; 0        ; 0        ; 0        ;
-+------------+----------+------------+----------+----------+----------+
++--------------------------------------------------------------------------------------------------------------------------------------------------+
+; Recovery Transfers                                                                                                                               ;
++------------+-------------------------------------------------------------------------------------+------------+----------+------------+----------+
+; From Clock ; To Clock                                                                            ; RR Paths   ; FR Paths ; RF Paths   ; FF Paths ;
++------------+-------------------------------------------------------------------------------------+------------+----------+------------+----------+
+; CLOCK_50   ; TD_CLK27                                                                            ; false path ; 0        ; false path ; 0        ;
+; TD_CLK27   ; TD_CLK27                                                                            ; 32         ; 0        ; 0          ; 0        ;
+; CLOCK_50   ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; false path ; 0        ; 0          ; 0        ;
++------------+-------------------------------------------------------------------------------------+------------+----------+------------+----------+
 Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
 
 
-+---------------------------------------------------------------------+
-; Removal Transfers                                                   ;
-+------------+----------+------------+----------+----------+----------+
-; From Clock ; To Clock ; RR Paths   ; FR Paths ; RF Paths ; FF Paths ;
-+------------+----------+------------+----------+----------+----------+
-; CLOCK_50   ; TD_CLK27 ; false path ; 0        ; 0        ; 0        ;
-; TD_CLK27   ; TD_CLK27 ; 32         ; 0        ; 0        ; 0        ;
-+------------+----------+------------+----------+----------+----------+
++--------------------------------------------------------------------------------------------------------------------------------------------------+
+; Removal Transfers                                                                                                                                ;
++------------+-------------------------------------------------------------------------------------+------------+----------+------------+----------+
+; From Clock ; To Clock                                                                            ; RR Paths   ; FR Paths ; RF Paths   ; FF Paths ;
++------------+-------------------------------------------------------------------------------------+------------+----------+------------+----------+
+; CLOCK_50   ; TD_CLK27                                                                            ; false path ; 0        ; false path ; 0        ;
+; TD_CLK27   ; TD_CLK27                                                                            ; 32         ; 0        ; 0          ; 0        ;
+; CLOCK_50   ; u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk ; false path ; 0        ; 0          ; 0        ;
++------------+-------------------------------------------------------------------------------------+------------+----------+------------+----------+
 Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
 
 
@@ -1274,11 +1274,11 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 ; Property                        ; Setup ; Hold ;
 +---------------------------------+-------+------+
 ; Illegal Clocks                  ; 0     ; 0    ;
-; Unconstrained Clocks            ; 2     ; 2    ;
-; Unconstrained Input Ports       ; 1     ; 1    ;
-; Unconstrained Input Port Paths  ; 1     ; 1    ;
-; Unconstrained Output Ports      ; 28    ; 28   ;
-; Unconstrained Output Port Paths ; 42    ; 42   ;
+; Unconstrained Clocks            ; 4     ; 4    ;
+; Unconstrained Input Ports       ; 2     ; 2    ;
+; Unconstrained Input Port Paths  ; 4     ; 4    ;
+; Unconstrained Output Ports      ; 30    ; 30   ;
+; Unconstrained Output Port Paths ; 51    ; 51   ;
 +---------------------------------+-------+------+
 
 
@@ -1290,6 +1290,8 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 ;                                                                                     ; tv_27m_ext                                                                          ; Virtual   ; Constrained   ;
 ; CLOCK_50                                                                            ; CLOCK_50                                                                            ; Base      ; Constrained   ;
 ; DRAM_CLK                                                                            ; clk_dram_ext                                                                        ; Generated ; Constrained   ;
+; I2C_AV_Config:u1|mI2C_CTRL_CLK                                                      ;                                                                                     ; Base      ; Unconstrained ;
+; Reset_Delay:u3|oRST_0                                                               ;                                                                                     ; Base      ; Unconstrained ;
 ; TD_CLK27                                                                            ; TD_CLK27                                                                            ; Base      ; Constrained   ;
 ; TD_HS                                                                               ;                                                                                     ; Base      ; Unconstrained ;
 ; VGA_Ctrl:u9|oVGA_HS                                                                 ;                                                                                     ; Base      ; Unconstrained ;
@@ -1299,94 +1301,100 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 +-------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------+-----------+---------------+
 
 
-+---------------------------------------------------------------------------------------------------+
-; Unconstrained Input Ports                                                                         ;
-+------------+--------------------------------------------------------------------------------------+
-; Input Port ; Comment                                                                              ;
-+------------+--------------------------------------------------------------------------------------+
-; TD_CLK27   ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
-+------------+--------------------------------------------------------------------------------------+
++------------------------------------------------------------------------------------------------------+
+; Unconstrained Input Ports                                                                            ;
++---------------+--------------------------------------------------------------------------------------+
+; Input Port    ; Comment                                                                              ;
++---------------+--------------------------------------------------------------------------------------+
+; FPGA_I2C_SDAT ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; TD_CLK27      ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
++---------------+--------------------------------------------------------------------------------------+
 
 
-+-----------------------------------------------------------------------------------------------------+
-; Unconstrained Output Ports                                                                          ;
-+-------------+---------------------------------------------------------------------------------------+
-; Output Port ; Comment                                                                               ;
-+-------------+---------------------------------------------------------------------------------------+
-; VGA_BLANK_N ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_B[0]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_B[1]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_B[2]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_B[3]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_B[4]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_B[5]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_B[6]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_B[7]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_CLK     ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_G[0]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_G[1]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_G[2]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_G[3]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_G[4]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_G[5]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_G[6]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_G[7]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_HS      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_R[0]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_R[1]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_R[2]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_R[3]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_R[4]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_R[5]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_R[6]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_R[7]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_VS      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-+-------------+---------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------------------------+
+; Unconstrained Output Ports                                                                            ;
++---------------+---------------------------------------------------------------------------------------+
+; Output Port   ; Comment                                                                               ;
++---------------+---------------------------------------------------------------------------------------+
+; FPGA_I2C_SCLK ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; FPGA_I2C_SDAT ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_BLANK_N   ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_B[0]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_B[1]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_B[2]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_B[3]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_B[4]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_B[5]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_B[6]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_B[7]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_CLK       ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_G[0]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_G[1]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_G[2]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_G[3]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_G[4]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_G[5]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_G[6]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_G[7]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_HS        ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_R[0]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_R[1]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_R[2]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_R[3]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_R[4]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_R[5]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_R[6]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_R[7]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_VS        ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
++---------------+---------------------------------------------------------------------------------------+
 
 
-+---------------------------------------------------------------------------------------------------+
-; Unconstrained Input Ports                                                                         ;
-+------------+--------------------------------------------------------------------------------------+
-; Input Port ; Comment                                                                              ;
-+------------+--------------------------------------------------------------------------------------+
-; TD_CLK27   ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
-+------------+--------------------------------------------------------------------------------------+
++------------------------------------------------------------------------------------------------------+
+; Unconstrained Input Ports                                                                            ;
++---------------+--------------------------------------------------------------------------------------+
+; Input Port    ; Comment                                                                              ;
++---------------+--------------------------------------------------------------------------------------+
+; FPGA_I2C_SDAT ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; TD_CLK27      ; No input delay, min/max delays, false-path exceptions, or max skew assignments found ;
++---------------+--------------------------------------------------------------------------------------+
 
 
-+-----------------------------------------------------------------------------------------------------+
-; Unconstrained Output Ports                                                                          ;
-+-------------+---------------------------------------------------------------------------------------+
-; Output Port ; Comment                                                                               ;
-+-------------+---------------------------------------------------------------------------------------+
-; VGA_BLANK_N ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_B[0]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_B[1]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_B[2]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_B[3]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_B[4]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_B[5]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_B[6]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_B[7]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_CLK     ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_G[0]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_G[1]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_G[2]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_G[3]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_G[4]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_G[5]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_G[6]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_G[7]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_HS      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_R[0]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_R[1]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_R[2]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_R[3]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_R[4]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_R[5]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_R[6]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_R[7]    ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_VS      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-+-------------+---------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------------------------+
+; Unconstrained Output Ports                                                                            ;
++---------------+---------------------------------------------------------------------------------------+
+; Output Port   ; Comment                                                                               ;
++---------------+---------------------------------------------------------------------------------------+
+; FPGA_I2C_SCLK ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; FPGA_I2C_SDAT ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_BLANK_N   ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_B[0]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_B[1]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_B[2]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_B[3]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_B[4]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_B[5]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_B[6]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_B[7]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_CLK       ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_G[0]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_G[1]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_G[2]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_G[3]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_G[4]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_G[5]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_G[6]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_G[7]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_HS        ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_R[0]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_R[1]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_R[2]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_R[3]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_R[4]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_R[5]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_R[6]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_R[7]      ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; VGA_VS        ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
++---------------+---------------------------------------------------------------------------------------+
 
 
 +--------------------------+
@@ -1395,61 +1403,60 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 Info: *******************************************************************
 Info: Running Quartus Prime Timing Analyzer
     Info: Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
-    Info: Processing started: Sun Nov 23 01:12:57 2025
+    Info: Processing started: Sun Nov 23 14:02:13 2025
 Info: Command: quartus_sta DE10_Standard_TV -c DE10_Standard_TV
 Info: qsta_default_script.tcl version: #1
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (20030): Parallel compilation is enabled and will use 14 of the 14 processors detected
+Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
 Info (21077): Low junction temperature is 0 degrees C
 Info (21077): High junction temperature is 85 degrees C
+Warning (335093): The Timing Analyzer is analyzing 2 combinational loops as latches. For more details, run the Check Timing command in the Timing Analyzer or view the "User-Specified and Inferred Latches" table in the Analysis & Synthesis report.
 Info (332164): Evaluating HDL-embedded SDC commands
     Info (332165): Entity dcfifo_bg02
         Info (332166): set_false_path -from *rdptr_g* -to *ws_dgrp|dffpipe_qe9:dffpipe16|dffe17a* 
         Info (332166): set_false_path -from *delayed_wrptr_g* -to *rs_dgwp|dffpipe_pe9:dffpipe13|dffe14a* 
-Warning (332174): Ignored filter at qsta_default_script.tcl(1297): *ws_dgrp|dffpipe_qe9:dffpipe16|dffe17a* could not be matched with a clock or keeper or register or port or pin or cell or partition File: C:/altera_lite/25.1std/quartus/common/tcl/internal/qsta_default_script.tcl Line: 1297
-Warning (332049): Ignored set_false_path at qsta_default_script.tcl(1297): Argument <to> is not an object ID File: C:/altera_lite/25.1std/quartus/common/tcl/internal/qsta_default_script.tcl Line: 1297
-    Info (332050): read_sdc File: C:/altera_lite/25.1std/quartus/common/tcl/internal/qsta_default_script.tcl Line: 1297
-Warning (332174): Ignored filter at qsta_default_script.tcl(1297): *delayed_wrptr_g* could not be matched with a clock or keeper or register or port or pin or cell or partition File: C:/altera_lite/25.1std/quartus/common/tcl/internal/qsta_default_script.tcl Line: 1297
-Warning (332049): Ignored set_false_path at qsta_default_script.tcl(1297): Argument <from> is not an object ID File: C:/altera_lite/25.1std/quartus/common/tcl/internal/qsta_default_script.tcl Line: 1297
-    Info (332050): read_sdc File: C:/altera_lite/25.1std/quartus/common/tcl/internal/qsta_default_script.tcl Line: 1297
 Info (332104): Reading SDC File: 'DE10_Standard_TV.sdc'
-Warning (332174): Ignored filter at DE10_Standard_TV.sdc(10): CLOCK2_50 could not be matched with a port File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 10
-Warning (332049): Ignored create_clock at DE10_Standard_TV.sdc(10): Argument <targets> is an empty collection File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 10
-    Info (332050): create_clock -period 20.0 [get_ports CLOCK2_50] File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 10
-Warning (332174): Ignored filter at DE10_Standard_TV.sdc(11): CLOCK3_50 could not be matched with a port File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 11
-Warning (332049): Ignored create_clock at DE10_Standard_TV.sdc(11): Argument <targets> is an empty collection File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 11
-    Info (332050): create_clock -period 20.0 [get_ports CLOCK3_50] File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 11
-Warning (332174): Ignored filter at DE10_Standard_TV.sdc(12): CLOCK4_50 could not be matched with a port File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 12
-Warning (332049): Ignored create_clock at DE10_Standard_TV.sdc(12): Argument <targets> is an empty collection File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 12
-    Info (332050): create_clock -period 20.0 [get_ports CLOCK4_50] File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 12
-Warning (332174): Ignored filter at DE10_Standard_TV.sdc(20): altera_reserved_tck could not be matched with a port or pin or register or keeper or net or combinational node or node File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 20
-Warning (332049): Ignored create_clock at DE10_Standard_TV.sdc(20): Argument <targets> is not an object ID File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 20
-    Info (332050): create_clock -name {altera_reserved_tck} -period 40 {altera_reserved_tck} File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 20
-Warning (332174): Ignored filter at DE10_Standard_TV.sdc(21): altera_reserved_tdi could not be matched with a port File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 21
-Warning (332174): Ignored filter at DE10_Standard_TV.sdc(21): altera_reserved_tck could not be matched with a clock File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 21
-Warning (332049): Ignored set_input_delay at DE10_Standard_TV.sdc(21): Argument <targets> is an empty collection File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 21
-    Info (332050): set_input_delay -clock altera_reserved_tck -clock_fall 3 [get_ports altera_reserved_tdi] File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 21
-Warning (332049): Ignored set_input_delay at DE10_Standard_TV.sdc(21): Argument -clock is not an object ID File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 21
-Warning (332174): Ignored filter at DE10_Standard_TV.sdc(22): altera_reserved_tms could not be matched with a port File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 22
-Warning (332049): Ignored set_input_delay at DE10_Standard_TV.sdc(22): Argument <targets> is an empty collection File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 22
-    Info (332050): set_input_delay -clock altera_reserved_tck -clock_fall 3 [get_ports altera_reserved_tms] File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 22
-Warning (332049): Ignored set_input_delay at DE10_Standard_TV.sdc(22): Argument -clock is not an object ID File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 22
-Warning (332174): Ignored filter at DE10_Standard_TV.sdc(23): altera_reserved_tdo could not be matched with a port File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 23
-Warning (332049): Ignored set_output_delay at DE10_Standard_TV.sdc(23): Argument <targets> is an empty collection File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 23
-    Info (332050): set_output_delay -clock altera_reserved_tck 3 [get_ports altera_reserved_tdo] File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 23
-Warning (332049): Ignored set_output_delay at DE10_Standard_TV.sdc(23): Argument -clock is not an object ID File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 23
+Warning (332174): Ignored filter at DE10_Standard_TV.sdc(10): CLOCK2_50 could not be matched with a port File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 10
+Warning (332049): Ignored create_clock at DE10_Standard_TV.sdc(10): Argument <targets> is an empty collection File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 10
+    Info (332050): create_clock -period 20.0 [get_ports CLOCK2_50] File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 10
+Warning (332174): Ignored filter at DE10_Standard_TV.sdc(11): CLOCK3_50 could not be matched with a port File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 11
+Warning (332049): Ignored create_clock at DE10_Standard_TV.sdc(11): Argument <targets> is an empty collection File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 11
+    Info (332050): create_clock -period 20.0 [get_ports CLOCK3_50] File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 11
+Warning (332174): Ignored filter at DE10_Standard_TV.sdc(12): CLOCK4_50 could not be matched with a port File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 12
+Warning (332049): Ignored create_clock at DE10_Standard_TV.sdc(12): Argument <targets> is an empty collection File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 12
+    Info (332050): create_clock -period 20.0 [get_ports CLOCK4_50] File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 12
+Warning (332174): Ignored filter at DE10_Standard_TV.sdc(20): altera_reserved_tck could not be matched with a port or pin or register or keeper or net or combinational node or node File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 20
+Warning (332049): Ignored create_clock at DE10_Standard_TV.sdc(20): Argument <targets> is not an object ID File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 20
+    Info (332050): create_clock -name {altera_reserved_tck} -period 40 {altera_reserved_tck} File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 20
+Warning (332174): Ignored filter at DE10_Standard_TV.sdc(21): altera_reserved_tdi could not be matched with a port File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 21
+Warning (332174): Ignored filter at DE10_Standard_TV.sdc(21): altera_reserved_tck could not be matched with a clock File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 21
+Warning (332049): Ignored set_input_delay at DE10_Standard_TV.sdc(21): Argument <targets> is an empty collection File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 21
+    Info (332050): set_input_delay -clock altera_reserved_tck -clock_fall 3 [get_ports altera_reserved_tdi] File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 21
+Warning (332049): Ignored set_input_delay at DE10_Standard_TV.sdc(21): Argument -clock is not an object ID File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 21
+Warning (332174): Ignored filter at DE10_Standard_TV.sdc(22): altera_reserved_tms could not be matched with a port File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 22
+Warning (332049): Ignored set_input_delay at DE10_Standard_TV.sdc(22): Argument <targets> is an empty collection File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 22
+    Info (332050): set_input_delay -clock altera_reserved_tck -clock_fall 3 [get_ports altera_reserved_tms] File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 22
+Warning (332049): Ignored set_input_delay at DE10_Standard_TV.sdc(22): Argument -clock is not an object ID File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 22
+Warning (332174): Ignored filter at DE10_Standard_TV.sdc(23): altera_reserved_tdo could not be matched with a port File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 23
+Warning (332049): Ignored set_output_delay at DE10_Standard_TV.sdc(23): Argument <targets> is an empty collection File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 23
+    Info (332050): set_output_delay -clock altera_reserved_tck 3 [get_ports altera_reserved_tdo] File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 23
+Warning (332049): Ignored set_output_delay at DE10_Standard_TV.sdc(23): Argument -clock is not an object ID File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 23
 Info (332110): Deriving PLL clocks
     Info (332110): create_generated_clock -source {u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|refclkin} -divide_by 3 -multiply_by 100 -duty_cycle 50.00 -name {u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]} {u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0]}
     Info (332110): create_generated_clock -source {u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|vco0ph[0]} -divide_by 9 -duty_cycle 50.00 -name {u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk} {u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk}
     Info (332110): create_generated_clock -source {u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|vco0ph[0]} -divide_by 9 -phase -144.97 -duty_cycle 50.00 -name {u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk} {u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk}
 Info (332151): Clock uncertainty is not calculated until you update the timing netlist.
-Warning (332174): Ignored filter at DE10_Standard_TV.sdc(93): u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[2].gpll~PLL_OUTPUT_COUNTER|divclk could not be matched with a clock File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 93
-Warning (332049): Ignored set_false_path at DE10_Standard_TV.sdc(93): Argument <to> is an empty collection File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 93
-    Info (332050): set_false_path -from [get_clocks {CLOCK_50}] -to [get_clocks {u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[2].gpll~PLL_OUTPUT_COUNTER|divclk}] File: C:/Users/arshd/Desktop/project/ADC_code/DE10_Standard_TV.sdc Line: 93
+Warning (332174): Ignored filter at DE10_Standard_TV.sdc(93): u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[2].gpll~PLL_OUTPUT_COUNTER|divclk could not be matched with a clock File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 93
+Warning (332049): Ignored set_false_path at DE10_Standard_TV.sdc(93): Argument <to> is an empty collection File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 93
+    Info (332050): set_false_path -from [get_clocks {CLOCK_50}] -to [get_clocks {u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[2].gpll~PLL_OUTPUT_COUNTER|divclk}] File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/ADC_code_updated/DE10_Standard_TV.sdc Line: 93
 Warning (332060): Node: VGA_Ctrl:u9|oVGA_HS was determined to be a clock but was found without an associated clock assignment.
     Info (13166): Register VGA_Ctrl:u9|V_Cont[1] is being clocked by VGA_Ctrl:u9|oVGA_HS
 Warning (332060): Node: TD_HS was determined to be a clock but was found without an associated clock assignment.
-    Info (13166): Register TD_Detect:u2|NTSC is being clocked by TD_HS
+    Info (13166): Register TD_Detect:u2|PAL is being clocked by TD_HS
+Warning (332060): Node: Reset_Delay:u3|oRST_0 was determined to be a clock but was found without an associated clock assignment.
+    Info (13166): Latch Sdram_Control_4Port:u6|rRD2_ADDR[11]~3 is being clocked by Reset_Delay:u3|oRST_0
+Warning (332060): Node: I2C_AV_Config:u1|mI2C_CTRL_CLK was determined to be a clock but was found without an associated clock assignment.
+    Info (13166): Register I2C_AV_Config:u1|mI2C_DATA[4] is being clocked by I2C_AV_Config:u1|mI2C_CTRL_CLK
 Info (332097): The following timing edges are non-unate.  The Timing Analyzer will assume pos-unate behavior for these edges in the clock network.
     Info (332098): Cell: u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL  from: refclkin  to: fbclk
     Info (332098): Cell: u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER  from: vco0ph[0]  to: divclk
@@ -1460,44 +1467,44 @@ Info: Found TIMING_ANALYZER_REPORT_SCRIPT_INCLUDE_DEFAULT_ANALYSIS = ON
 Info: Analyzing Slow 1100mV 85C Model
 Critical Warning (332148): Timing requirements not met
     Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the Timing Analyzer.
-Info (332146): Worst-case setup slack is -1.374
+Info (332146): Worst-case setup slack is -1.639
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -1.374             -20.105 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
-    Info (332119):     0.511               0.000 clk_dram_ext 
-    Info (332119):    16.104               0.000 CLOCK_50 
-    Info (332119):    30.328               0.000 TD_CLK27 
-Info (332146): Worst-case hold slack is 0.282
+    Info (332119):    -1.639             -21.604 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
+    Info (332119):    -0.301              -0.539 clk_dram_ext 
+    Info (332119):    10.867               0.000 TD_CLK27 
+    Info (332119):    15.591               0.000 CLOCK_50 
+Info (332146): Worst-case hold slack is 0.294
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.282               0.000 TD_CLK27 
-    Info (332119):     0.373               0.000 CLOCK_50 
-    Info (332119):     0.505               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
-    Info (332119):     1.320               0.000 clk_dram_ext 
-Info (332146): Worst-case recovery slack is 35.231
+    Info (332119):     0.294               0.000 TD_CLK27 
+    Info (332119):     0.367               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
+    Info (332119):     0.375               0.000 CLOCK_50 
+    Info (332119):     1.160               0.000 clk_dram_ext 
+Info (332146): Worst-case recovery slack is 35.432
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    35.231               0.000 TD_CLK27 
-Info (332146): Worst-case removal slack is 0.536
+    Info (332119):    35.432               0.000 TD_CLK27 
+Info (332146): Worst-case removal slack is 0.373
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.536               0.000 TD_CLK27 
+    Info (332119):     0.373               0.000 TD_CLK27 
 Info (332146): Worst-case minimum pulse width slack is 0.555
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
     Info (332119):     0.555               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0] 
-    Info (332119):     3.764               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
+    Info (332119):     3.768               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
     Info (332119):     4.831               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk 
-    Info (332119):     9.218               0.000 CLOCK_50 
-    Info (332119):    17.392               0.000 TD_CLK27 
-Info (332114): Report Metastability: Found 21 synchronizer chains.
+    Info (332119):     8.881               0.000 CLOCK_50 
+    Info (332119):    17.390               0.000 TD_CLK27 
+Info (332114): Report Metastability: Found 89 synchronizer chains.
     Info (332114): Worst-Case MTBF of Design is 1e+09 years or 3.15e+16 seconds.
     Info (332114): Typical MTBF of Design is 1e+09 years or 3.15e+16 seconds.
 
-    Info (332114): Number of Synchronizer Chains Found: 21
+    Info (332114): Number of Synchronizer Chains Found: 89
     Info (332114): Shortest Synchronizer Chain: 2 Registers
-    Info (332114): Fraction of Chains for which MTBFs Could Not be Calculated: 0.048
-    Info (332114): Worst Case Available Settling Time: 68.316 ns
+    Info (332114): Fraction of Chains for which MTBFs Could Not be Calculated: 0.326
+    Info (332114): Worst Case Available Settling Time: 10.270 ns
     Info (332114): 
     Info (332114): Worst-Case MTBF values are calculated based on the worst-case silicon characteristics, with worst-case operating conditions.
     Info (332114):   - Under worst-case conditions, an increase of 100ps in available settling time will increase MTBF values by a factor of 79.4
@@ -1509,7 +1516,11 @@ Info (334004): Delay annotation completed successfully
 Warning (332060): Node: VGA_Ctrl:u9|oVGA_HS was determined to be a clock but was found without an associated clock assignment.
     Info (13166): Register VGA_Ctrl:u9|V_Cont[1] is being clocked by VGA_Ctrl:u9|oVGA_HS
 Warning (332060): Node: TD_HS was determined to be a clock but was found without an associated clock assignment.
-    Info (13166): Register TD_Detect:u2|NTSC is being clocked by TD_HS
+    Info (13166): Register TD_Detect:u2|PAL is being clocked by TD_HS
+Warning (332060): Node: Reset_Delay:u3|oRST_0 was determined to be a clock but was found without an associated clock assignment.
+    Info (13166): Latch Sdram_Control_4Port:u6|rRD2_ADDR[11]~3 is being clocked by Reset_Delay:u3|oRST_0
+Warning (332060): Node: I2C_AV_Config:u1|mI2C_CTRL_CLK was determined to be a clock but was found without an associated clock assignment.
+    Info (13166): Register I2C_AV_Config:u1|mI2C_DATA[4] is being clocked by I2C_AV_Config:u1|mI2C_CTRL_CLK
 Info (332097): The following timing edges are non-unate.  The Timing Analyzer will assume pos-unate behavior for these edges in the clock network.
     Info (332098): Cell: u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL  from: refclkin  to: fbclk
     Info (332098): Cell: u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER  from: vco0ph[0]  to: divclk
@@ -1518,44 +1529,44 @@ Info (332097): The following timing edges are non-unate.  The Timing Analyzer wi
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
 Critical Warning (332148): Timing requirements not met
     Info (11105): For recommendations on closing timing, run Report Timing Closure Recommendations in the Timing Analyzer.
-Info (332146): Worst-case setup slack is -1.031
+Info (332146): Worst-case setup slack is -1.313
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -1.031             -14.766 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
-    Info (332119):     0.626               0.000 clk_dram_ext 
-    Info (332119):    16.151               0.000 CLOCK_50 
-    Info (332119):    30.216               0.000 TD_CLK27 
-Info (332146): Worst-case hold slack is 0.180
+    Info (332119):    -1.313             -16.346 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
+    Info (332119):    -0.197              -0.197 clk_dram_ext 
+    Info (332119):    11.110               0.000 TD_CLK27 
+    Info (332119):    15.463               0.000 CLOCK_50 
+Info (332146): Worst-case hold slack is 0.177
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.180               0.000 TD_CLK27 
-    Info (332119):     0.373               0.000 CLOCK_50 
-    Info (332119):     0.382               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
-    Info (332119):     1.381               0.000 clk_dram_ext 
-Info (332146): Worst-case recovery slack is 35.337
+    Info (332119):     0.177               0.000 TD_CLK27 
+    Info (332119):     0.309               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
+    Info (332119):     0.376               0.000 CLOCK_50 
+    Info (332119):     1.161               0.000 clk_dram_ext 
+Info (332146): Worst-case recovery slack is 35.533
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    35.337               0.000 TD_CLK27 
-Info (332146): Worst-case removal slack is 0.450
+    Info (332119):    35.533               0.000 TD_CLK27 
+Info (332146): Worst-case removal slack is 0.306
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.450               0.000 TD_CLK27 
+    Info (332119):     0.306               0.000 TD_CLK27 
 Info (332146): Worst-case minimum pulse width slack is 0.555
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
     Info (332119):     0.555               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0] 
-    Info (332119):     3.745               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
+    Info (332119):     3.748               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
     Info (332119):     4.794               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk 
-    Info (332119):     9.278               0.000 CLOCK_50 
-    Info (332119):    17.428               0.000 TD_CLK27 
-Info (332114): Report Metastability: Found 21 synchronizer chains.
+    Info (332119):     8.848               0.000 CLOCK_50 
+    Info (332119):    17.427               0.000 TD_CLK27 
+Info (332114): Report Metastability: Found 89 synchronizer chains.
     Info (332114): Worst-Case MTBF of Design is 1e+09 years or 3.15e+16 seconds.
     Info (332114): Typical MTBF of Design is 1e+09 years or 3.15e+16 seconds.
 
-    Info (332114): Number of Synchronizer Chains Found: 21
+    Info (332114): Number of Synchronizer Chains Found: 89
     Info (332114): Shortest Synchronizer Chain: 2 Registers
-    Info (332114): Fraction of Chains for which MTBFs Could Not be Calculated: 0.048
-    Info (332114): Worst Case Available Settling Time: 68.574 ns
+    Info (332114): Fraction of Chains for which MTBFs Could Not be Calculated: 0.326
+    Info (332114): Worst Case Available Settling Time: 10.433 ns
     Info (332114): 
     Info (332114): Worst-Case MTBF values are calculated based on the worst-case silicon characteristics, with worst-case operating conditions.
     Info (332114):   - Under worst-case conditions, an increase of 100ps in available settling time will increase MTBF values by a factor of 5.2
@@ -1567,51 +1578,55 @@ Info (334004): Delay annotation completed successfully
 Warning (332060): Node: VGA_Ctrl:u9|oVGA_HS was determined to be a clock but was found without an associated clock assignment.
     Info (13166): Register VGA_Ctrl:u9|V_Cont[1] is being clocked by VGA_Ctrl:u9|oVGA_HS
 Warning (332060): Node: TD_HS was determined to be a clock but was found without an associated clock assignment.
-    Info (13166): Register TD_Detect:u2|NTSC is being clocked by TD_HS
+    Info (13166): Register TD_Detect:u2|PAL is being clocked by TD_HS
+Warning (332060): Node: Reset_Delay:u3|oRST_0 was determined to be a clock but was found without an associated clock assignment.
+    Info (13166): Latch Sdram_Control_4Port:u6|rRD2_ADDR[11]~3 is being clocked by Reset_Delay:u3|oRST_0
+Warning (332060): Node: I2C_AV_Config:u1|mI2C_CTRL_CLK was determined to be a clock but was found without an associated clock assignment.
+    Info (13166): Register I2C_AV_Config:u1|mI2C_DATA[4] is being clocked by I2C_AV_Config:u1|mI2C_CTRL_CLK
 Info (332097): The following timing edges are non-unate.  The Timing Analyzer will assume pos-unate behavior for these edges in the clock network.
     Info (332098): Cell: u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL  from: refclkin  to: fbclk
     Info (332098): Cell: u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER  from: vco0ph[0]  to: divclk
     Info (332098): Cell: u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_REFCLK_SELECT  from: clkin[1]  to: clkout
     Info (332098): Cell: u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER  from: vco0ph[0]  to: divclk
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
-Info (332146): Worst-case setup slack is 1.769
+Info (332146): Worst-case setup slack is 1.517
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     1.769               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
-    Info (332119):     1.981               0.000 clk_dram_ext 
-    Info (332119):    17.681               0.000 CLOCK_50 
-    Info (332119):    33.240               0.000 TD_CLK27 
-Info (332146): Worst-case hold slack is 0.181
+    Info (332119):     1.517               0.000 clk_dram_ext 
+    Info (332119):     1.654               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
+    Info (332119):    11.877               0.000 TD_CLK27 
+    Info (332119):    17.250               0.000 CLOCK_50 
+Info (332146): Worst-case hold slack is 0.178
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.181               0.000 TD_CLK27 
-    Info (332119):     0.185               0.000 CLOCK_50 
-    Info (332119):     0.297               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
-    Info (332119):     2.165               0.000 clk_dram_ext 
-Info (332146): Worst-case recovery slack is 35.804
+    Info (332119):     0.178               0.000 TD_CLK27 
+    Info (332119):     0.180               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
+    Info (332119):     0.201               0.000 CLOCK_50 
+    Info (332119):     1.990               0.000 clk_dram_ext 
+Info (332146): Worst-case recovery slack is 35.966
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    35.804               0.000 TD_CLK27 
-Info (332146): Worst-case removal slack is 0.301
+    Info (332119):    35.966               0.000 TD_CLK27 
+Info (332146): Worst-case removal slack is 0.195
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.301               0.000 TD_CLK27 
+    Info (332119):     0.195               0.000 TD_CLK27 
 Info (332146): Worst-case minimum pulse width slack is 0.555
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
     Info (332119):     0.555               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0] 
     Info (332119):     3.884               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
     Info (332119):     4.903               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk 
-    Info (332119):     9.099               0.000 CLOCK_50 
-    Info (332119):    16.997               0.000 TD_CLK27 
-Info (332114): Report Metastability: Found 21 synchronizer chains.
+    Info (332119):     8.799               0.000 CLOCK_50 
+    Info (332119):    16.999               0.000 TD_CLK27 
+Info (332114): Report Metastability: Found 89 synchronizer chains.
     Info (332114): Worst-Case MTBF of Design is 1e+09 years or 3.15e+16 seconds.
     Info (332114): Typical MTBF of Design is 1e+09 years or 3.15e+16 seconds.
 
-    Info (332114): Number of Synchronizer Chains Found: 21
+    Info (332114): Number of Synchronizer Chains Found: 89
     Info (332114): Shortest Synchronizer Chain: 2 Registers
-    Info (332114): Fraction of Chains for which MTBFs Could Not be Calculated: 0.048
-    Info (332114): Worst Case Available Settling Time: 70.027 ns
+    Info (332114): Fraction of Chains for which MTBFs Could Not be Calculated: 0.326
+    Info (332114): Worst Case Available Settling Time: 11.877 ns
     Info (332114): 
     Info (332114): Worst-Case MTBF values are calculated based on the worst-case silicon characteristics, with worst-case operating conditions.
     Info (332114):   - Under worst-case conditions, an increase of 100ps in available settling time will increase MTBF values by a factor of 79.4
@@ -1621,51 +1636,55 @@ Info: Analyzing Fast 1100mV 0C Model
 Warning (332060): Node: VGA_Ctrl:u9|oVGA_HS was determined to be a clock but was found without an associated clock assignment.
     Info (13166): Register VGA_Ctrl:u9|V_Cont[1] is being clocked by VGA_Ctrl:u9|oVGA_HS
 Warning (332060): Node: TD_HS was determined to be a clock but was found without an associated clock assignment.
-    Info (13166): Register TD_Detect:u2|NTSC is being clocked by TD_HS
+    Info (13166): Register TD_Detect:u2|PAL is being clocked by TD_HS
+Warning (332060): Node: Reset_Delay:u3|oRST_0 was determined to be a clock but was found without an associated clock assignment.
+    Info (13166): Latch Sdram_Control_4Port:u6|rRD2_ADDR[11]~3 is being clocked by Reset_Delay:u3|oRST_0
+Warning (332060): Node: I2C_AV_Config:u1|mI2C_CTRL_CLK was determined to be a clock but was found without an associated clock assignment.
+    Info (13166): Register I2C_AV_Config:u1|mI2C_DATA[4] is being clocked by I2C_AV_Config:u1|mI2C_CTRL_CLK
 Info (332097): The following timing edges are non-unate.  The Timing Analyzer will assume pos-unate behavior for these edges in the clock network.
     Info (332098): Cell: u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL  from: refclkin  to: fbclk
     Info (332098): Cell: u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER  from: vco0ph[0]  to: divclk
     Info (332098): Cell: u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_REFCLK_SELECT  from: clkin[1]  to: clkout
     Info (332098): Cell: u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER  from: vco0ph[0]  to: divclk
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
-Info (332146): Worst-case setup slack is 2.012
+Info (332146): Worst-case setup slack is 1.666
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     2.012               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
-    Info (332119):     2.091               0.000 clk_dram_ext 
-    Info (332119):    17.866               0.000 CLOCK_50 
-    Info (332119):    33.454               0.000 TD_CLK27 
-Info (332146): Worst-case hold slack is 0.126
+    Info (332119):     1.666               0.000 clk_dram_ext 
+    Info (332119):     1.892               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
+    Info (332119):    12.260               0.000 TD_CLK27 
+    Info (332119):    17.388               0.000 CLOCK_50 
+Info (332146): Worst-case hold slack is 0.114
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.126               0.000 TD_CLK27 
-    Info (332119):     0.176               0.000 CLOCK_50 
-    Info (332119):     0.197               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
-    Info (332119):     2.145               0.000 clk_dram_ext 
-Info (332146): Worst-case recovery slack is 35.927
+    Info (332119):     0.114               0.000 TD_CLK27 
+    Info (332119):     0.169               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
+    Info (332119):     0.190               0.000 CLOCK_50 
+    Info (332119):     1.941               0.000 clk_dram_ext 
+Info (332146): Worst-case recovery slack is 36.067
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    35.927               0.000 TD_CLK27 
-Info (332146): Worst-case removal slack is 0.234
+    Info (332119):    36.067               0.000 TD_CLK27 
+Info (332146): Worst-case removal slack is 0.141
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.234               0.000 TD_CLK27 
+    Info (332119):     0.141               0.000 TD_CLK27 
 Info (332146): Worst-case minimum pulse width slack is 0.555
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
     Info (332119):     0.555               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~FRACTIONAL_PLL|vcoph[0] 
     Info (332119):     3.883               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[0].gpll~PLL_OUTPUT_COUNTER|divclk 
     Info (332119):     4.900               0.000 u6|sdram_pll1|sdram_pll_inst|altera_pll_i|general[1].gpll~PLL_OUTPUT_COUNTER|divclk 
-    Info (332119):     9.064               0.000 CLOCK_50 
+    Info (332119):     8.754               0.000 CLOCK_50 
     Info (332119):    16.953               0.000 TD_CLK27 
-Info (332114): Report Metastability: Found 21 synchronizer chains.
+Info (332114): Report Metastability: Found 89 synchronizer chains.
     Info (332114): Worst-Case MTBF of Design is 1e+09 years or 3.15e+16 seconds.
     Info (332114): Typical MTBF of Design is 1e+09 years or 3.15e+16 seconds.
 
-    Info (332114): Number of Synchronizer Chains Found: 21
+    Info (332114): Number of Synchronizer Chains Found: 89
     Info (332114): Shortest Synchronizer Chain: 2 Registers
-    Info (332114): Fraction of Chains for which MTBFs Could Not be Calculated: 0.048
-    Info (332114): Worst Case Available Settling Time: 70.466 ns
+    Info (332114): Fraction of Chains for which MTBFs Could Not be Calculated: 0.326
+    Info (332114): Worst Case Available Settling Time: 12.026 ns
     Info (332114): 
     Info (332114): Worst-Case MTBF values are calculated based on the worst-case silicon characteristics, with worst-case operating conditions.
     Info (332114):   - Under worst-case conditions, an increase of 100ps in available settling time will increase MTBF values by a factor of 5.2
@@ -1673,10 +1692,10 @@ Info (332114): Report Metastability: Found 21 synchronizer chains.
     Info (332114):   - Under typical conditions, an increase of 100ps in available settling time will increase MTBF values by a factor of 17.8
 Info (332102): Design is not fully constrained for setup requirements
 Info (332102): Design is not fully constrained for hold requirements
-Info: Quartus Prime Timing Analyzer was successful. 0 errors, 36 warnings
-    Info: Peak virtual memory: 5460 megabytes
-    Info: Processing ended: Sun Nov 23 01:13:02 2025
-    Info: Elapsed time: 00:00:05
-    Info: Total CPU time (on all processors): 00:00:06
+Info: Quartus Prime Timing Analyzer was successful. 0 errors, 41 warnings
+    Info: Peak virtual memory: 5420 megabytes
+    Info: Processing ended: Sun Nov 23 14:02:20 2025
+    Info: Elapsed time: 00:00:07
+    Info: Total CPU time (on all processors): 00:00:09
 
 

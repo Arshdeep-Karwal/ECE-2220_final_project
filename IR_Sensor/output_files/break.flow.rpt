@@ -1,5 +1,5 @@
 Flow report for break
-Sun Nov 23 01:43:55 2025
+Sun Nov 23 14:24:27 2025
 Quartus Prime Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
 
 
@@ -41,7 +41,7 @@ on the Quartus Prime software download page.
 +-----------------------------------------------------------------------------------+
 ; Flow Summary                                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Flow Status                     ; Successful - Sun Nov 23 01:43:51 2025           ;
+; Flow Status                     ; Successful - Sun Nov 23 14:24:22 2025           ;
 ; Quartus Prime Version           ; 25.1std.0 Build 1129 10/21/2025 SC Lite Edition ;
 ; Revision Name                   ; break                                           ;
 ; Top-level Entity Name           ; break                                           ;
@@ -49,7 +49,7 @@ on the Quartus Prime software download page.
 ; Device                          ; 5CSXFC6D6F31C6                                  ;
 ; Timing Models                   ; Final                                           ;
 ; Logic utilization (in ALMs)     ; 21 / 41,910 ( < 1 % )                           ;
-; Total registers                 ; 35                                              ;
+; Total registers                 ; 37                                              ;
 ; Total pins                      ; 5 / 499 ( 1 % )                                 ;
 ; Total virtual pins              ; 0                                               ;
 ; Total block memory bits         ; 0 / 5,662,720 ( 0 % )                           ;
@@ -68,7 +68,7 @@ on the Quartus Prime software download page.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 11/23/2025 01:43:04 ;
+; Start date & time ; 11/23/2025 14:23:50 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; break               ;
 +-------------------+---------------------+
@@ -79,7 +79,7 @@ on the Quartus Prime software download page.
 +-------------------------------------+----------------------------------------+---------------+-------------+------------+
 ; Assignment Name                     ; Value                                  ; Default Value ; Entity Name ; Section Id ;
 +-------------------------------------+----------------------------------------+---------------+-------------+------------+
-; COMPILER_SIGNATURE_ID               ; 242190095949523.176388378418812        ; --            ; --          ; --         ;
+; COMPILER_SIGNATURE_ID               ; 220877825392979.176392942911000        ; --            ; --          ; --         ;
 ; MAX_CORE_JUNCTION_TEMP              ; 85                                     ; --            ; --          ; --         ;
 ; MIN_CORE_JUNCTION_TEMP              ; 0                                      ; --            ; --          ; --         ;
 ; OUTPUT_IO_TIMING_FAR_END_VMEAS      ; Half Signal Swing                      ; --            ; --          ; --         ;
@@ -98,11 +98,11 @@ on the Quartus Prime software download page.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:05     ; 1.0                     ; 4881 MB             ; 00:00:13                           ;
-; Fitter               ; 00:00:33     ; 1.0                     ; 7760 MB             ; 00:02:59                           ;
-; Assembler            ; 00:00:07     ; 1.0                     ; 5227 MB             ; 00:00:06                           ;
-; Timing Analyzer      ; 00:00:03     ; 1.1                     ; 5385 MB             ; 00:00:03                           ;
-; Total                ; 00:00:48     ; --                      ; --                  ; 00:03:21                           ;
+; Analysis & Synthesis ; 00:00:07     ; 1.0                     ; 4853 MB             ; 00:00:14                           ;
+; Fitter               ; 00:00:19     ; 1.0                     ; 6546 MB             ; 00:00:32                           ;
+; Assembler            ; 00:00:05     ; 1.0                     ; 5225 MB             ; 00:00:04                           ;
+; Timing Analyzer      ; 00:00:04     ; 1.0                     ; 5356 MB             ; 00:00:03                           ;
+; Total                ; 00:00:35     ; --                      ; --                  ; 00:00:53                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
@@ -111,10 +111,10 @@ on the Quartus Prime software download page.
 +----------------------+------------------+------------+------------+----------------+
 ; Module Name          ; Machine Hostname ; OS Name    ; OS Version ; Processor type ;
 +----------------------+------------------+------------+------------+----------------+
-; Analysis & Synthesis ; Arshdeep_Karwal  ; Windows 10 ; 10.0       ; x86_64         ;
-; Fitter               ; Arshdeep_Karwal  ; Windows 10 ; 10.0       ; x86_64         ;
-; Assembler            ; Arshdeep_Karwal  ; Windows 10 ; 10.0       ; x86_64         ;
-; Timing Analyzer      ; Arshdeep_Karwal  ; Windows 10 ; 10.0       ; x86_64         ;
+; Analysis & Synthesis ; Arshdeep-Karwal  ; Windows 10 ; 10.0       ; x86_64         ;
+; Fitter               ; Arshdeep-Karwal  ; Windows 10 ; 10.0       ; x86_64         ;
+; Assembler            ; Arshdeep-Karwal  ; Windows 10 ; 10.0       ; x86_64         ;
+; Timing Analyzer      ; Arshdeep-Karwal  ; Windows 10 ; 10.0       ; x86_64         ;
 +----------------------+------------------+------------+------------+----------------+
 
 

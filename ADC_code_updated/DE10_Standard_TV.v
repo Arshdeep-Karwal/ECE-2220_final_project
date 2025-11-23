@@ -19,7 +19,7 @@
 module DE10_Standard_TV(
 
       ///////// CLOCK /////////
-      input         CLOCK_50,
+      input              CLOCK_50,
 
       ///////// KEY /////////
       input    [ 3: 0]   KEY,
@@ -87,64 +87,66 @@ module DE10_Standard_TV(
 //=======================================================
 
 // NEW CODE
-parameter SHUTDOWN_CODE = 10'h112;		// SW[0, 1, 4, 8] ON
+parameter SHUTDOWN_CODE = 10'h112;		// SW[1, 4, 8] ON
 
-wire 			   slow_clock;		// 1Hz clock
-wire 				HEX_match;		//
-reg 				Video_On;
+wire 			 slow_clock;		// 1Hz clock
+wire 			 Hex_Match;		
+reg 			 Video_On;
 
-wire Gated_Enable_MAIN;
-wire Gated_Enable_SDRAM;
+wire 			 Gated_Enable_Main;
+wire 			 Gated_Enable_SDRAM;
+
+wire 			 AUD_CTRL_CLK;
 
 // ***********************************************************
 
 
 //	For ITU-R 656 Decoder
-wire	[15:0]	YCbCr;
-wire	[9:0]	TV_X;
-wire			TV_DVAL;
+wire	[15:0] YCbCr;
+wire	[9:0]	 TV_X;
+wire			 TV_DVAL;
 
 //	For VGA Controller
-wire	[9:0]	mRed;
-wire	[9:0]	mGreen;
-wire	[9:0]	mBlue;
-wire	[10:0]	VGA_X;
-wire	[10:0]	VGA_Y;
-wire			VGA_Read;	//	VGA data request
-wire			m1VGA_Read;	//	Read odd field
-wire			m2VGA_Read;	//	Read even field
+wire	[9:0]	 mRed;
+wire	[9:0]	 mGreen;
+wire	[9:0]	 mBlue;
+wire	[10:0] VGA_X;
+wire	[10:0] VGA_Y;
+wire			 VGA_Read;	//	VGA data request
+wire			 m1VGA_Read;	//	Read odd field
+wire			 m2VGA_Read;	//	Read even field
 
 //	For YUV 4:2:2 to YUV 4:4:4
-wire	[7:0]	mY;
-wire	[7:0]	mCb;
-wire	[7:0]	mCr;
+wire	[7:0]	 mY;
+wire	[7:0]	 mCb;
+wire	[7:0]	 mCr;
 
 //	For field select
-wire	[15:0]	mYCbCr;
-wire	[15:0]	mYCbCr_d;
-wire	[15:0]	m1YCbCr;
-wire	[15:0]	m2YCbCr;
-wire	[15:0]	m3YCbCr;
+wire	[15:0] mYCbCr;
+wire	[15:0] mYCbCr_d;
+wire	[15:0] m1YCbCr;
+wire	[15:0] m2YCbCr;
+wire	[15:0] m3YCbCr;
 //	For Delay Timer
-wire			TD_Stable;
+wire			 TD_Stable;
 
-wire			DLY0;
-wire			DLY1;
-wire			DLY2;
+wire			 DLY0;
+wire			 DLY1;
+wire			 DLY2;
 
 //	For Down Sample
-wire	[3:0]	Remain;
-wire	[9:0]	Quotient;
+wire	[3:0]	 Remain;
+wire	[9:0]	 Quotient;
 
-wire			mDVAL;
+wire			 mDVAL;
 
-wire	[15:0]	m4YCbCr;
-wire	[15:0]	m5YCbCr;
-wire	[8:0]	Tmp1,Tmp2;
-wire	[7:0]	Tmp3,Tmp4;
+wire	[15:0] m4YCbCr;
+wire	[15:0] m5YCbCr;
+wire	[8:0]	 Tmp1,Tmp2;
+wire	[7:0]	 Tmp3,Tmp4;
 
-wire            NTSC;
-wire            PAL;
+wire         NTSC;
+wire         PAL;
 //=============================================================================
 // Structural coding
 //=============================================================================
@@ -161,6 +163,9 @@ always @ (posedge CLOCK_50 or negedge KEY[0]) begin
 		if (Hex_Match) begin
 			Video_On <= 1'b0;
 		end
+		else begin 
+			Video_On <= 1'b1;
+		end
 	end
 end
 
@@ -168,8 +173,7 @@ assign Gated_Enable_SDRAM = DLY0 & Video_On;
 assign Gated_Enable_Main = DLY1 & Video_On;
 
 //	Turn On TV Decoder if system is enabled
-assign	TD_RESET_N	=	Gated_Enable_SDRAM;
-
+assign TD_RESET_N	=	1'b1;
 assign LEDR[0] = Video_On;
 
 // *************************************************
@@ -218,7 +222,7 @@ SEG7_LUT_6 			u0	(	.oSEG0(HEX0),
 //	Audio CODEC and video decoder setting (CONFIGURES CHIP)
 I2C_AV_Config 	u1	(	//	Host Side
 						.iCLK(CLOCK_50),
-						.iRST_N(Gated_Enable_Main),
+						.iRST_N(KEY[0]),
 						//	I2C Side
 						.I2C_SCLK(FPGA_I2C_SCLK),
 						.I2C_SDAT(FPGA_I2C_SDAT));	
@@ -252,7 +256,7 @@ ITU_656_Decoder		u4	(	//	TV Decoder Input
 							//	Control Signals
 							.iSwap_CbCr(Quotient[0]),
 							.iSkip(Remain==4'h0),
-							.iRST_N(Gated_Enable_Main),
+							.iRST_N(DLY1),
 							.iCLK_27(~TD_CLK27)	);
 
 //=======================================================
@@ -384,12 +388,6 @@ VGA_Ctrl			u9	(	//	Host Side
 							//	Control Signal
 							.iCLK(TD_CLK27),
 							.iRST_N(DLY2)	);
-
-
-					
-					
-
-
 
 endmodule
 

@@ -41,26 +41,17 @@
 
 		always @ (posedge slow_clk)	
 			begin
-				
-				if ( !rst_n )							
-					begin
-						LED9 <= 0								;	// if reset, turn off object detect
-					end
+				if ( !rst_n ) begin
 					
-				else 
-					begin
-						if ( !sense )							
-							begin
-								if ( sense_hold != sense)		//	check if "sense" state has changed
-									begin
-										sense_hold <= sense	;	//	change current sense state
-										LED9 <= !LED9			;	// compliment LED   - changes state
-									end 	
-							end
-	
-						else 
-							sense_hold <= sense				;	// if not detected, - update sense state  
-					end		
+					LED9 <= 0								;	// if reset, turn off object detect
+					sense_hold <= 1'b1					;
+					
+				end else begin
+					if ( sense_hold != sense) begin		//	check if "sense" state has changed		
+						sense_hold <= sense	;	//	change current sense state
+						LED9 <= ~LED9			;	// compliment LED   - changes state
+					end 	
+				end		
 			end
 			
 		endmodule
@@ -78,7 +69,7 @@
 					reg 		clk_1Hz = 1'b0				;	//	Reset slow clock to "0"
 					reg 		[27:0] counter = 0		;	// 27 bit register to be able to count to 25,000,000
 		
-					integer	clk_count = 10_000	;	// NEW VALUE
+					integer	clk_count = 50_000	;	// NEW VALUE
 		
 		
 		always@(posedge clk)

@@ -1,5 +1,5 @@
 Analysis & Synthesis report for break
-Sun Nov 23 01:43:09 2025
+Sun Nov 23 14:23:56 2025
 Quartus Prime Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
 
 
@@ -43,7 +43,7 @@ on the Quartus Prime software download page.
 +-----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Sun Nov 23 01:43:09 2025           ;
+; Analysis & Synthesis Status     ; Successful - Sun Nov 23 14:23:56 2025           ;
 ; Quartus Prime Version           ; 25.1std.0 Build 1129 10/21/2025 SC Lite Edition ;
 ; Revision Name                   ; break                                           ;
 ; Top-level Entity Name           ; break                                           ;
@@ -155,25 +155,25 @@ on the Quartus Prime software download page.
 +----------------------------+-------------+
 ; Processors                 ; Number      ;
 +----------------------------+-------------+
-; Number detected on machine ; 20          ;
-; Maximum allowed            ; 14          ;
+; Number detected on machine ; 8           ;
+; Maximum allowed            ; 4           ;
 ;                            ;             ;
 ; Average used               ; 1.00        ;
-; Maximum used               ; 14          ;
+; Maximum used               ; 4           ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processors 2-14        ;   0.0%      ;
+;     Processors 2-4         ;   0.0%      ;
 +----------------------------+-------------+
 
 
-+------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Source Files Read                                                                                                   ;
-+----------------------------------+-----------------+------------------------+--------------------------------------------------+---------+
-; File Name with User-Entered Path ; Used in Netlist ; File Type              ; File Name with Absolute Path                     ; Library ;
-+----------------------------------+-----------------+------------------------+--------------------------------------------------+---------+
-; break.v                          ; yes             ; User Verilog HDL File  ; C:/Users/arshd/Desktop/project/IR_Sensor/break.v ;         ;
-+----------------------------------+-----------------+------------------------+--------------------------------------------------+---------+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                                                                                                         ;
++----------------------------------+-----------------+------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type              ; File Name with Absolute Path                                                                                                                                           ; Library ;
++----------------------------------+-----------------+------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------+
+; break.v                          ; yes             ; User Verilog HDL File  ; C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/IR_Sensor/break.v ;         ;
++----------------------------------+-----------------+------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------+
 
 
 +---------------------------------------------------------+
@@ -181,13 +181,13 @@ on the Quartus Prime software download page.
 +---------------------------------------------+-----------+
 ; Resource                                    ; Usage     ;
 +---------------------------------------------+-----------+
-; Estimate of Logic utilization (ALMs needed) ; 20        ;
+; Estimate of Logic utilization (ALMs needed) ; 21        ;
 ;                                             ;           ;
-; Combinational ALUT usage for logic          ; 38        ;
+; Combinational ALUT usage for logic          ; 37        ;
 ;     -- 7 input functions                    ; 0         ;
-;     -- 6 input functions                    ; 0         ;
-;     -- 5 input functions                    ; 4         ;
-;     -- 4 input functions                    ; 4         ;
+;     -- 6 input functions                    ; 4         ;
+;     -- 5 input functions                    ; 1         ;
+;     -- 4 input functions                    ; 2         ;
 ;     -- <=3 input functions                  ; 30        ;
 ;                                             ;           ;
 ; Dedicated logic registers                   ; 32        ;
@@ -198,8 +198,8 @@ on the Quartus Prime software download page.
 ;                                             ;           ;
 ; Maximum fan-out node                        ; clk~input ;
 ; Maximum fan-out                             ; 30        ;
-; Total fan-out                               ; 196       ;
-; Average fan-out                             ; 2.45      ;
+; Total fan-out                               ; 195       ;
+; Average fan-out                             ; 2.47      ;
 +---------------------------------------------+-----------+
 
 
@@ -208,8 +208,8 @@ on the Quartus Prime software download page.
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
 ; Compilation Hierarchy Node ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name ; Entity Name ; Library Name ;
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
-; |break                     ; 38 (2)              ; 32 (3)                    ; 0                 ; 0          ; 5    ; 0            ; |break              ; break       ; work         ;
-;    |SlowClock:U1|          ; 36 (36)             ; 29 (29)                   ; 0                 ; 0          ; 0    ; 0            ; |break|SlowClock:U1 ; SlowClock   ; work         ;
+; |break                     ; 37 (2)              ; 32 (3)                    ; 0                 ; 0          ; 5    ; 0            ; |break              ; break       ; work         ;
+;    |SlowClock:U1|          ; 35 (35)             ; 29 (29)                   ; 0                 ; 0          ; 0    ; 0            ; |break|SlowClock:U1 ; SlowClock   ; work         ;
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
@@ -237,17 +237,18 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; arriav_ff             ; 32                          ;
 ;     SCLR              ; 28                          ;
 ;     plain             ; 4                           ;
-; arriav_lcell_comb     ; 38                          ;
+; arriav_lcell_comb     ; 37                          ;
 ;     arith             ; 28                          ;
 ;         1 data inputs ; 28                          ;
-;     normal            ; 10                          ;
-;         3 data inputs ; 2                           ;
-;         4 data inputs ; 4                           ;
-;         5 data inputs ; 4                           ;
+;     normal            ; 9                           ;
+;         2 data inputs ; 2                           ;
+;         4 data inputs ; 2                           ;
+;         5 data inputs ; 1                           ;
+;         6 data inputs ; 4                           ;
 ; boundary_port         ; 5                           ;
 ;                       ;                             ;
 ; Max LUT depth         ; 3.70                        ;
-; Average LUT depth     ; 2.78                        ;
+; Average LUT depth     ; 2.61                        ;
 +-----------------------+-----------------------------+
 
 
@@ -266,29 +267,29 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
-    Info: Processing started: Sun Nov 23 01:43:04 2025
+    Info: Processing started: Sun Nov 23 14:23:49 2025
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off break -c break
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (20030): Parallel compilation is enabled and will use 14 of the 14 processors detected
-Warning (10463): Verilog HDL Declaration warning at break.v(9): "break" is SystemVerilog-2005 keyword File: C:/Users/arshd/Desktop/project/IR_Sensor/break.v Line: 9
+Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
+Warning (10463): Verilog HDL Declaration warning at break.v(9): "break" is SystemVerilog-2005 keyword File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/IR_Sensor/break.v Line: 9
 Info (12021): Found 2 design units, including 2 entities, in source file break.v
-    Info (12023): Found entity 1: break File: C:/Users/arshd/Desktop/project/IR_Sensor/break.v Line: 9
-    Info (12023): Found entity 2: SlowClock File: C:/Users/arshd/Desktop/project/IR_Sensor/break.v Line: 73
+    Info (12023): Found entity 1: break File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/IR_Sensor/break.v Line: 9
+    Info (12023): Found entity 2: SlowClock File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/IR_Sensor/break.v Line: 64
 Info (12127): Elaborating entity "break" for the top level hierarchy
-Info (12128): Elaborating entity "SlowClock" for hierarchy "SlowClock:U1" File: C:/Users/arshd/Desktop/project/IR_Sensor/break.v Line: 39
-Warning (10036): Verilog HDL or VHDL warning at break.v(78): object "clk_1Hz" assigned a value but never read File: C:/Users/arshd/Desktop/project/IR_Sensor/break.v Line: 78
-Warning (10230): Verilog HDL assignment warning at break.v(86): truncated value with size 32 to match size of target (28) File: C:/Users/arshd/Desktop/project/IR_Sensor/break.v Line: 86
+Info (12128): Elaborating entity "SlowClock" for hierarchy "SlowClock:U1" File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/IR_Sensor/break.v Line: 39
+Warning (10036): Verilog HDL or VHDL warning at break.v(69): object "clk_1Hz" assigned a value but never read File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/IR_Sensor/break.v Line: 69
+Warning (10230): Verilog HDL assignment warning at break.v(77): truncated value with size 32 to match size of target (28) File: C:/Users/arshd/OneDrive/Documents/Arshdeep Documents/University Course Material/Year 2 (2025-2026)/FALL 2025/ECE 2220/PROJECT/ECE-2220-final-project/IR_Sensor/break.v Line: 77
 Info (286030): Timing-Driven Synthesis is running
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 44 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 43 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 3 input pins
     Info (21059): Implemented 2 output pins
-    Info (21061): Implemented 39 logic cells
+    Info (21061): Implemented 38 logic cells
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 4 warnings
-    Info: Peak virtual memory: 4881 megabytes
-    Info: Processing ended: Sun Nov 23 01:43:09 2025
-    Info: Elapsed time: 00:00:05
-    Info: Total CPU time (on all processors): 00:00:13
+    Info: Peak virtual memory: 4853 megabytes
+    Info: Processing ended: Sun Nov 23 14:23:56 2025
+    Info: Elapsed time: 00:00:07
+    Info: Total CPU time (on all processors): 00:00:14
 
 
