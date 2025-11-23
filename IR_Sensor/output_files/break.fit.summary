@@ -1,4 +1,4 @@
-Fitter Status : Successful - Fri Nov 21 16:01:24 2025
+Fitter Status : Successful - Sun Nov 23 01:43:43 2025
 Quartus Prime Version : 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
 Revision Name : break
 Top-level Entity Name : break
@@ -6,7 +6,7 @@ Family : Cyclone V
 Device : 5CSXFC6D6F31C6
 Timing Models : Final
 Logic utilization (in ALMs) : 21 / 41,910 ( < 1 % )
-Total registers : 36
+Total registers : 35
 Total pins : 5 / 499 ( 1 % )
 Total virtual pins : 0
 Total block memory bits : 0 / 5,662,720 ( 0 % )

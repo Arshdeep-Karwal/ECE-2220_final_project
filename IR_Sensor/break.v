@@ -6,7 +6,7 @@
 //	****************************************************
 
 
-	module beam_interrupt ( clk, rst_n, sense, LED0, LED9);
+	module break ( clk, rst_n, sense, LED0, LED9);
 	
 		input 					   clk						;	//	50 MHz system clock
 		input							rst_n						;	// System reset set to SW[0] - PIN_AB30 - SW[0]=1 to run 
@@ -39,24 +39,27 @@
 		SlowClock U1 (clk, slow_clk)						;
 
 
-always @ (posedge slow_clk)	
+		always @ (posedge slow_clk)	
 			begin
 				
 				if ( !rst_n )							
 					begin
 						LED9 <= 0								;	// if reset, turn off object detect
-						sense_hold <= 1'b1				;	// Optional: Reset sense_hold to a known state (e.g., unbroken)
 					end
 					
-				else 
+				else 
 					begin
-						// CHECK IF THE CURRENT STATE IS DIFFERENT FROM THE PREVIOUS STATE
-						if ( sense_hold != sense )							
+						if ( !sense )							
 							begin
-								sense_hold <= sense	;	//	Update the hold register to the new state
-								LED9 <= !LED9			;	//	COMPLIMENT LED (toggle state)
+								if ( sense_hold != sense)		//	check if "sense" state has changed
+									begin
+										sense_hold <= sense	;	//	change current sense state
+										LED9 <= !LED9			;	// compliment LED   - changes state
+									end 	
 							end
-						// If sense_hold == sense, do nothing (wait for a change)
+	
+						else 
+							sense_hold <= sense				;	// if not detected, - update sense state  
 					end		
 			end
 			
@@ -75,7 +78,7 @@ always @ (posedge slow_clk)
 					reg 		clk_1Hz = 1'b0				;	//	Reset slow clock to "0"
 					reg 		[27:0] counter = 0		;	// 27 bit register to be able to count to 25,000,000
 		
-					integer	clk_count = 100_000	;	// slow clock count for 500 Hz or 2 ms
+					integer	clk_count = 10_000	;	// NEW VALUE
 		
 		
 		always@(posedge clk)
