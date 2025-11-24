@@ -6,7 +6,7 @@ JedecChain;
 	P ActionCode(Ign)
 		Device PartName(SOCVHPS) MfrSpec(OpMask(0));
 	P ActionCode(Cfg)
-		Device PartName(5CSXFC6D6F31) Path("C:/Users/arshd/Desktop/project/Insper DE10-Standard-v.1.3.0-SystemCD master Demonstration-FPGA_DE10_Standard_TV (1)/output_files/") File("DE10_Standard_TV.sof") MfrSpec(OpMask(1));
+		Device PartName(5CSXFC6D6F31) Path("C:/Users/arshd/Desktop/project/ADC_code_updated/output_files/") File("DE10_Standard_TV.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 

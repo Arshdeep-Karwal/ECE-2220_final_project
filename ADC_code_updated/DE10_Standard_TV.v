@@ -75,8 +75,7 @@ module DE10_Standard_TV(
 
 
       ///////// IR /////////
-      output             IRDA_TXD,
-      input              IRDA_RXD
+      input              SENSE
 );
 
 
@@ -90,6 +89,9 @@ module DE10_Standard_TV(
 parameter SHUTDOWN_CODE = 10'h112;		// SW[1, 4, 8] ON
 
 wire 			 slow_clock;		// 1Hz clock
+reg 			 sense_hold;
+reg 			 ledIR;
+
 wire 			 Hex_Match;		
 reg 			 Video_On;
 
@@ -158,12 +160,19 @@ assign Hex_Match = (SW[9:0] == SHUTDOWN_CODE);
 always @ (posedge CLOCK_50 or negedge KEY[0]) begin
 	if (~KEY[0]) begin
 		Video_On <= 1'b0;
+		ledIR <= 0;
+		sense_hold <= 0;
 	end
 	else begin
+		if (sense_hold != SENSE) begin
+			sense_hold <= SENSE;
+			ledIR <= ~ledIR;
+		end
+		
 		if (Hex_Match) begin
 			Video_On <= 1'b0;
 		end
-		else begin 
+		else if (SW[9:0] == 0) begin 
 			Video_On <= 1'b1;
 		end
 	end
@@ -175,6 +184,7 @@ assign Gated_Enable_Main = DLY1 & Video_On;
 //	Turn On TV Decoder if system is enabled
 assign TD_RESET_N	=	1'b1;
 assign LEDR[0] = Video_On;
+assign LEDR[1] = ledIR;
 
 // *************************************************
 
@@ -187,10 +197,11 @@ assign LEDR[0] = Video_On;
 
 
 
-assign	LEDR[8:1]	=	VGA_Y[8:1];
+assign	LEDR[8:2]	=	VGA_Y[8:2];
 
-heart_beat  heart_TD_CLK27 (.CLK  (TD_CLK27), .CLK_FREQ (27_000_000), .CK_1HZ (LEDR[9]) ) ;
+heart_beat  heart_TD_CLK27 (.CLK  (TD_CLK27), .CLK_FREQ (27_000_000), .CK_1HZ (slow_clock) ) ;
 
+assign 	LEDR[9] = slow_clock;
 
 assign	m1VGA_Read	=	VGA_Y[0]		?	1'b0		:	VGA_Read	;
 assign	m2VGA_Read	=	VGA_Y[0]		?	VGA_Read	:	1'b0		;
@@ -222,7 +233,7 @@ SEG7_LUT_6 			u0	(	.oSEG0(HEX0),
 //	Audio CODEC and video decoder setting (CONFIGURES CHIP)
 I2C_AV_Config 	u1	(	//	Host Side
 						.iCLK(CLOCK_50),
-						.iRST_N(KEY[0]),
+						.iRST_N(Video_On),	// CHANGED
 						//	I2C Side
 						.I2C_SCLK(FPGA_I2C_SCLK),
 						.I2C_SDAT(FPGA_I2C_SDAT));	
@@ -234,7 +245,7 @@ TD_Detect			u2	(	.oTD_Stable(TD_Stable),
 							.oPAL(PAL),
 							.iTD_VS(TD_VS),
 							.iTD_HS(TD_HS),
-							.iRST_N(KEY[0]));
+							.iRST_N(Video_On));		// CHANGED
 
 //	Reset Delay Timer
 Reset_Delay			u3	(	.iCLK(CLOCK_50),

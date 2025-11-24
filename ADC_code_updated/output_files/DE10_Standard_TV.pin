@@ -179,7 +179,7 @@ GND                          : AC8       : gnd    :                   :         
 RESERVED_INPUT_WITH_WEAK_PULLUP : AC9       :        :                   :         : 3A        :                
 VCCPD3A                      : AC10      : power  :                   : 2.5V    : 3A        :                
 VCCIO3A                      : AC11      : power  :                   : 2.5V    : 3A        :                
-RESERVED_INPUT_WITH_WEAK_PULLUP : AC12      :        :                   :         : 3A        :                
+SENSE                        : AC12      : input  : 2.5 V             :         : 3A        : Y              
 VCCPD3B4A                    : AC13      : power  :                   : 3.3V    : 3B, 4A    :                
 DRAM_ADDR[5]                 : AC14      : output : 3.3-V LVTTL       :         : 3B        : Y              
 VCCPD3B4A                    : AC15      : power  :                   : 3.3V    : 3B, 4A    :                
@@ -935,8 +935,8 @@ HEX2[6]                      : W16       : output : 3.3-V LVTTL       :         
 HEX0[0]                      : W17       : output : 3.3-V LVTTL       :         : 4A        : Y              
 GND                          : W18       : gnd    :                   :         :           :                
 HEX3[1]                      : W19       : output : 3.3-V LVTTL       :         : 4A        : Y              
-IRDA_RXD                     : W20       : input  : 3.3-V LVTTL       :         : 5A        : Y              
-IRDA_TXD                     : W21       : output : 3.3-V LVTTL       :         : 5A        : Y              
+RESERVED_INPUT_WITH_WEAK_PULLUP : W20       :        :                   :         : 5A        :                
+RESERVED_INPUT_WITH_WEAK_PULLUP : W21       :        :                   :         : 5A        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : W22       :        :                   :         : 5A        :                
 VCCIO5A                      : W23       : power  :                   : 3.3V    : 5A        :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : W24       :        :                   :         : 5A        :                
