@@ -1,6 +1,7 @@
 |DE10_Standard_TV
 CLOCK_50 => CLOCK_50.IN2
-KEY[0] => ledIR.ACLR
+KEY[0] => sense_hold.PRESET
+KEY[0] => ledON.ACLR
 KEY[0] => Video_On.ACLR
 KEY[1] => ~NO_FANOUT~
 KEY[2] => ~NO_FANOUT~
@@ -16,7 +17,7 @@ SW[7] => SW[7].IN1
 SW[8] => SW[8].IN1
 SW[9] => SW[9].IN1
 LEDR[0] <= Video_On.DB_MAX_OUTPUT_PORT_TYPE
-LEDR[1] <= ledIR.DB_MAX_OUTPUT_PORT_TYPE
+LEDR[1] <= ledON.DB_MAX_OUTPUT_PORT_TYPE
 LEDR[2] <= <GND>
 LEDR[3] <= <GND>
 LEDR[4] <= <GND>
@@ -150,7 +151,7 @@ VGA_SYNC_N <= VGA_Ctrl:u9.oVGA_SYNC
 FPGA_I2C_SCLK <= I2C_AV_Config:u1.I2C_SCLK
 FPGA_I2C_SDAT <> I2C_AV_Config:u1.I2C_SDAT
 SENSE => always0.IN1
-SENSE => always0.IN1
+SENSE => sense_hold.DATAIN
 
 
 |DE10_Standard_TV|heart_beat:heart_TD_CLK27

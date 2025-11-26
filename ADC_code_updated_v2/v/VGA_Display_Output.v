@@ -1,5 +1,5 @@
 // ****************************************************
-// Module: VGA_Display_Mapper
+// Module: VGA_Display_Output
 // Functionality:
 // 1. Receives current VGA coordinates (X, Y) from VGA_Ctrl.
 // 2. Checks system enable (iRST_N) for standby mode.
@@ -7,7 +7,7 @@
 // 4. Outputs pixel colors (oVGA_R/G/B) to be fed into VGA_Ctrl's input.
 // ****************************************************
 
-module VGA_Display_Mapper (
+module VGA_Display_Output (
     input               iCLK,
     input               iRST_N,           // System Enable (Gated_Enable_Main)
     input       [10: 0] iVGA_X,           // Horizontal Coordinate (0-639)

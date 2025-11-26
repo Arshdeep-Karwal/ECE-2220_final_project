@@ -91,6 +91,7 @@ parameter SHUTDOWN_CODE = 10'h112;		// SW[1, 4, 8] ON
 wire 			 slow_clock;		// 1Hz clock
 reg 			 sense_hold;
 reg 			 ledIR;
+reg 			 ledON;
 
 wire 			 Hex_Match;		
 reg 			 Video_On;
@@ -156,29 +157,27 @@ wire         PAL;
 //*********		NEW *************************
 // HEX code match with the code
 assign Hex_Match = (SW[9:0] == SHUTDOWN_CODE);
-
-//SlowClock(CLOCK_50, slow_clk);
-		
-
+	
+			
 always @ (posedge CLOCK_50 or negedge KEY[0]) begin
 	if (~KEY[0]) begin
 		Video_On <= 1'b0;
-		ledIR <= 1'b0;
+		ledON <= 0;
+
 		sense_hold <= 1'b1;
 	end
 	else begin	
-		ledIR <= ~ledIR;
+		ledON <= 1;
 		
 		if (Hex_Match) begin
 			Video_On <= 1'b0;
 		end
 		
-		if ((SW[9:0] == 10'b0) & (SENSE == 1'b0) & (sense_hold == 1'b1)) begin	
+		if (SW == 10'b0 & sense_hold != SENSE) begin	
 			Video_On <= 1'b1;
+			sense_hold <= SENSE;
 		end
 	end
-	
-	sense_hold <= SENSE;
 end
 
 assign Gated_Enable_SDRAM = DLY0 & Video_On;
@@ -187,7 +186,7 @@ assign Gated_Enable_Main = DLY1 & Video_On;
 //	Turn On TV Decoder if system is enabled
 assign TD_RESET_N	=	1'b1;
 assign LEDR[0] = Video_On;
-assign LEDR[1] = ledIR;
+assign LEDR[1] = ledON;
 
 // *************************************************
 
@@ -381,6 +380,9 @@ assign VGA_R = vga_r10[9:2];
 assign VGA_G = vga_g10[9:2];
 assign VGA_B = vga_b10[9:2];
 
+
+
+
 VGA_Ctrl			u9	(	//	Host Side
 							.iRed(mRed),
 							.iGreen(mGreen),
@@ -403,6 +405,29 @@ VGA_Ctrl			u9	(	//	Host Side
 
 endmodule
 
+	module SlowClock(clk, slow_clk)					;
+	
+		input					clk							;	// 50 MHz clock system clock
+		output	reg 		slow_clk						;	// 1  Hz  slow clock 25_000_000 ~ 1 sec
+
+					reg 		clk_1Hz = 1'b0				;	//	Reset slow clock to "0"
+					reg 		[27:0] counter = 0		;	// 27 bit register to be able to count to 25,000,000
+		
+					integer	clk_count = 50_000	;	
+		
+		
+		always@(posedge clk)
+			begin
+				counter <= counter + 1					;	// Increment counter
+//				if ( counter >= 2)
+				if ( counter >= clk_count )		
+					begin
+						counter <= 0						;	// If counter reaches 50,000,000 / 25,000,000 = 2 edges per period. 
+						slow_clk <= ~slow_clk			;	//	Complimrnt the 1 Hz clock
+					end
+			end
+
+	endmodule
 
 // ============================================================================
 // Copyright (c) 2016 by Terasic Technologies Inc.
