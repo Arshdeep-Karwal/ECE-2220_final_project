@@ -1,0 +1,22 @@
+module VGA_overlay (
+		input					iCLK,
+		input					iRST_N,
+		input 				iVideo_On,
+		
+		input 	  [10:0]	iVga_x,
+		input		  [10:0]	iVga_y,
+		
+		input		  [9:0]  iRed,
+		input 	  [9:0]  iGreen,
+		input		  [9:0]  iBlue,
+		
+		output reg [9:0]  oRed,
+		output reg [9:0]  oGreen,
+		output reg [9:0]  oBlue,		
+		);
+		
+	// TEXT SETTINGS
+	parameter 
+
+endmodule 
+	
