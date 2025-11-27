@@ -20,20 +20,33 @@ module VGA_overlay (
 	parameter BACKGROUND_COLOR = 10'h000;
 	
 	// TEXT
-	parameter TEXT_Y0          = 10;
-	parameter TEXT_HEIGHT 		= 40;
+	parameter TEXT_HEIGHT 		= 64;
+	parameter TEXT_WIDTH 		= 320;
 	
-	wire text_region 				= (iVga_y >= TEXT_Y0 && iVga_y < (TEXT_Y0 + TEXT_HEIGHT)); // Placement of text
-	wire text_pixel 				= text_region;
+	parameter TEXT_Y0          = 25;
+	parameter TEXT_X0 			= (640 - TEXT_WIDTH) / 2;
+	
+	wire text_region 				= (iVga_x >= TEXT_X0 & iVga_x < (TEXT_X0 + TEXT_WIDTH) &
+											iVga_y >= TEXT_Y0 & iVga_y < (TEXT_Y0 + TEXT_HEIGHT)); // Placement of text
+	
+	// TEXT - VIDEO OFF
+	parameter TEXT_HEIGHT2     = 80;
+	parameter TEXT_WIDTH2		= 400;
+	
+	parameter TEXT_X02			= (640 - TEXT_WIDTH2) / 2;
+	parameter TEXT_Y02			= (480 - TEXT_HEIGHT2) / 2;
+	
+	wire text_region2 			= (iVga_x >= TEXT_X02 & iVga_x < (TEXT_X02 + TEXT_WIDTH2) &
+											iVga_y >= TEXT_Y02 & iVga_y < (TEXT_Y02 + TEXT_HEIGHT2));
 	
 	
 	// VIDEO REGION
-	parameter WIDTH 	 = 480;
-	parameter HEIGHT   = 360;
+	parameter WIDTH 	 = 550;
+	parameter HEIGHT   = 380;
 	parameter VIDEO_X0 = (640 - WIDTH) / 2;
-	parameter VIDEO_Y0 = TEXT_Y0 + TEXT_HEIGHT + 20;	// 20 px below text
+	parameter VIDEO_Y0 = TEXT_Y0 + TEXT_HEIGHT + 50;	// 20 px below text
 	
-	wire video_region  = (iVga_x >= VIDEO_X0 & iVga_x < (VIDEO_X0 + WIDTH)
+	wire video_region  = (iVga_x >= VIDEO_X0 & iVga_x < (VIDEO_X0 + WIDTH) &
 								 iVga_y >= VIDEO_Y0 & iVga_y < (VIDEO_Y0 + HEIGHT));
 								 
 								 
@@ -53,7 +66,7 @@ module VGA_overlay (
 			if (!iVideo_On) begin
 				// TEXT ONLY
 				
-				if (text_pixel) begin
+				if (text_region2) begin
 					oRed	 <= TEXT_COLOR;
 					oGreen <= TEXT_COLOR;
 					oBlue  <= TEXT_COLOR;
