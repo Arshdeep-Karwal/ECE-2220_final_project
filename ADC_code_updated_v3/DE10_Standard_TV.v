@@ -86,7 +86,7 @@ module DE10_Standard_TV(
 //=======================================================
 
 // NEW CODE
-parameter SHUTDOWN_CODE = 10'h112;		// SW[1, 4, 8] ON
+reg 	[9:0]  SHUTDOWN_CODE;		// SW[1, 4, 8] ON
 
 wire 			 slow_clock;		// 1Hz clock
 reg 			 sense_hold;
@@ -156,8 +156,15 @@ wire         PAL;
 
 //*********		NEW *************************
 // HEX code match with the code
-assign Hex_Match = (SW[9:0] == SHUTDOWN_CODE);
+
+always @ (posedge CLOCK_50 or negedge KEY[1]) begin
+	if (~KEY[1]) SHUTDOWN_CODE = SW;
+end
+
+
+assign Hex_Match = (SW == SHUTDOWN_CODE);
 	
+
 			
 always @ (posedge CLOCK_50 or negedge KEY[0]) begin
 	if (~KEY[0]) begin
@@ -180,8 +187,7 @@ always @ (posedge CLOCK_50 or negedge KEY[0]) begin
 	end
 end
 
-assign Gated_Enable_SDRAM = DLY0 & Video_On;
-assign Gated_Enable_Main = DLY1 & Video_On;
+
 
 //	Turn On TV Decoder if system is enabled
 assign TD_RESET_N	=	1'b1;
@@ -245,7 +251,7 @@ TD_Detect			u2	(	.oTD_Stable(TD_Stable),
 							.oPAL(PAL),
 							.iTD_VS(TD_VS),
 							.iTD_HS(TD_HS),
-							.iRST_N(Video_On));		// CHANGED
+							.iRST_N(KEY[0]));		// CHANGED
 
 //	Reset Delay Timer
 Reset_Delay			u3	(	.iCLK(CLOCK_50),
@@ -287,7 +293,7 @@ DIV 				u5	(	.aclr(!DLY0),
 Sdram_Control_4Port	u6	(	//	HOST Side
 						   .REF_CLK(TD_CLK27),
 							.CLK_18(AUD_CTRL_CLK),
-						   .RESET_N(Gated_Enable_SDRAM),
+						   .RESET_N(DLY0),						//Gated_Enable_SDRAM
 							//	FIFO Write Side 1
 						   .WR1_DATA(YCbCr),
 							.WR1(TV_DVAL),
@@ -384,10 +390,10 @@ wire [9:0] final_r;
 wire [9:0] final_g;
 wire [9:0] final_b;
 
-VGA_overlay u9     (
+VGA_overlay (
 							 .iCLK(TD_CLK27),
-							 .RST_N(DLY2),
-							 .iVideo_on(Video_On),
+							 .iRST_N(DLY2),
+							 .iVideo_On(Video_On),
 							 
 							 .iVga_x(VGA_X),
 							 .iVga_y(VGA_Y),
@@ -402,7 +408,7 @@ VGA_overlay u9     (
 
 
 
-VGA_Ctrl			u9	(	//	Host Side
+VGA_Ctrl			(	//	Host Side
 							.iRed(final_r),
 							.iGreen(final_g),
 							.iBlue(final_b),
