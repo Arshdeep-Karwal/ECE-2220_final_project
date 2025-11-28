@@ -69,30 +69,25 @@ module VGA_overlay (
     wire pixel = rom_data[7 - bit_addr];
 
     // ===== OUTPUT PIXEL =====
-    always @(posedge iCLK) begin
-        if (!iRST_N) begin
-            oRed   <= 0;
-            oGreen <= 0;
-            oBlue  <= 0;
-        end else begin
-            if (!iVideo_On) begin
-                // Text only
-                if (in_region && pixel) begin
-                    oRed=oGreen=oBlue=WHITE;
-                end else begin
-                    oRed=oGreen=oBlue=BLACK;
-                end
-            end else begin
-                // Video with overlay text
-                if (in_region && pixel) begin
-                    oRed=oGreen=oBlue=WHITE;
-                end else begin
-                    oRed   <= iRed;
-                    oGreen <= iGreen;
-                    oBlue  <= iBlue;
-                end
-            end
-        end
+    always @(*) begin
+    if (!iVideo_On) begin
+        oRed   = 10'd0;
+        oGreen = 10'd0;
+        oBlue  = 10'd0;
     end
+    else if (iVga_x < 100 && iVga_y < 50) begin
+        // WHITE TEXT AREA
+        oRed   = WHITE;
+        oGreen = WHITE;
+        oBlue  = WHITE;
+    end
+    else begin
+        // PASS THROUGH CAMERA DATA
+        oRed   = iRed;
+        oGreen = iGreen;
+        oBlue  = iBlue;
+    end
+end
+
 
 endmodule
