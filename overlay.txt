@@ -1,135 +1,116 @@
-// ======================================================
-//   CENTERED ASCII TEXT OVERLAY USING ascii_rom
-//   Works with your exact ROM interface
-//   Requires exactly 1 cycle of latency compensation
-// ======================================================
-
 module VGA_overlay (
-    input         iCLK,
-    input         iRST_N,
-    input         iVideo_On,
+    input                   iCLK,
+    input                   iRST_N,
+    input                   iVideo_On,
+    
+    input      [10:0]       iVga_x,
+    input      [10:0]       iVga_y,
+    
+    input      [9:0]        iRed,
+    input      [9:0]        iGreen,
+    input      [9:0]        iBlue,
+    
+    output reg [9:0]        oRed,
+    output reg [9:0]        oGreen,
+    output reg [9:0]        oBlue     
+    );
 
-    input  [10:0] iVga_x,
-    input  [10:0] iVga_y,
+    // ------------------------------
+    // CONFIGURATION
+    // ------------------------------
+    localparam CHAR_WIDTH  = 8;
+    localparam CHAR_HEIGHT = 16;
 
-    input  [9:0]  iRed,
-    input  [9:0]  iGreen,
-    input  [9:0]  iBlue,
+    // TEXT 1 (VIDEO ON) - "INTRUDER"
+    localparam TEXT1 = "INTRUDER";
+    localparam TEXT1_LEN = 8;
+    
+    // TEXT 2 (VIDEO OFF) - "ARMED"
+    localparam TEXT2 = "ARMED";
+    localparam TEXT2_LEN = 5;
 
-    output reg [9:0]  oRed,
-    output reg [9:0]  oGreen,
-    output reg [9:0]  oBlue
-);
+    // COLORS
+    localparam [9:0] WHITE = 10'h3FF;
+    localparam [9:0] BLACK = 10'h000;
 
-// ---------------------------
-// Text configuration
-// ---------------------------
-localparam CHAR_W = 8;
-localparam CHAR_H = 16;
+    // ------------------------------
+    // TEXT POSITIONS
+    // ------------------------------
+    localparam TEXT1_WIDTH  = TEXT1_LEN * CHAR_WIDTH;
+    localparam TEXT2_WIDTH  = TEXT2_LEN * CHAR_WIDTH;
+    localparam TEXT_Y1      = 25;
+    localparam TEXT_Y2      = 200; // adjust vertical spacing
+    localparam TEXT_X1      = (640 - TEXT1_WIDTH) / 2;
+    localparam TEXT_X2      = (640 - TEXT2_WIDTH) / 2;
 
-localparam LINE1_STR = "INTRUDER DETECTED";
-localparam LINE2_STR = "SECURITY ALERT";
+    // ------------------------------
+    // VIDEO REGION
+    // ------------------------------
+    localparam VIDEO_WIDTH  = 550;
+    localparam VIDEO_HEIGHT = 380;
+    localparam VIDEO_X0     = (640 - VIDEO_WIDTH) / 2;
+    localparam VIDEO_Y0     = TEXT_Y1 + CHAR_HEIGHT + 50; // below TEXT1
 
-// Compute string lengths
-localparam L1_LEN = 18;
-localparam L2_LEN = 14;
+    wire video_region = (iVga_x >= VIDEO_X0 && iVga_x < VIDEO_X0 + VIDEO_WIDTH &&
+                         iVga_y >= VIDEO_Y0 && iVga_y < VIDEO_Y0 + VIDEO_HEIGHT);
 
-// Center positions
-localparam CENTER_X = 320 - (L1_LEN*CHAR_W)/2;
-localparam CENTER_Y1 = 160;   // line 1 Y
-localparam CENTER_Y2 = 200;   // line 2 Y
+    // ------------------------------
+    // TEXT REGION CHECKS
+    // ------------------------------
+    wire in_text1 = (iVga_x >= TEXT_X1 && iVga_x < TEXT_X1 + TEXT1_WIDTH &&
+                     iVga_y >= TEXT_Y1 && iVga_y < TEXT_Y1 + CHAR_HEIGHT);
 
-// ---------------------------
-// ROM instance
-// ---------------------------
-wire [7:0] rom_data;
-reg  [10:0] rom_addr_reg;
-reg  [10:0] rom_addr;
+    wire in_text2 = (iVga_x >= TEXT_X2 && iVga_x < TEXT_X2 + TEXT2_WIDTH &&
+                     iVga_y >= TEXT_Y2 && iVga_y < TEXT_Y2 + CHAR_HEIGHT);
 
-ascii_rom rom_inst(
-    .clk(iCLK),
-    .addr(rom_addr),
-    .data(rom_data)
-);
+    // ------------------------------
+    // CHARACTER & PIXEL CALC
+    // ------------------------------
+    wire [2:0] char_x1 = (iVga_x - TEXT_X1) % CHAR_WIDTH;
+    wire [2:0] char_x2 = (iVga_x - TEXT_X2) % CHAR_WIDTH;
 
-// Pipeline registers for sync
-reg [2:0]  col_d;
-reg [10:0] x_d, y_d;
-reg        text_active_d;
+    wire [3:0] char_y1 = (iVga_y - TEXT_Y1) % CHAR_HEIGHT;
+    wire [3:0] char_y2 = (iVga_y - TEXT_Y2) % CHAR_HEIGHT;
 
-// ---------------------------
-// Character generation
-// ---------------------------
-reg [7:0] current_char;
-reg       text_active;
+    wire [2:0] char_idx1 = (iVga_x - TEXT_X1) / CHAR_WIDTH; // 0..TEXT1_LEN-1
+    wire [2:0] char_idx2 = (iVga_x - TEXT_X2) / CHAR_WIDTH; // 0..TEXT2_LEN-1
 
-reg [3:0] row;
-reg [2:0] col;
+    wire [6:0] ascii1 = TEXT1[7*char_idx1 +: 7]; // select character
+    wire [6:0] ascii2 = TEXT2[7*char_idx2 +: 7];
 
-// Determine if inside line1 or line2
-always @(*) begin
-    text_active = 1'b0;
-    current_char = 8'h20; // space
+    // ------------------------------
+    // ASCII ROM COMBINATIONAL
+    // ------------------------------
+    wire [10:0] rom_addr1 = {ascii1, char_y1};
+    wire [10:0] rom_addr2 = {ascii2, char_y2};
+    wire [7:0] rom_out1, rom_out2;
 
-    // default row/col
-    row = iVga_y[3:0];
-    col = iVga_x[2:0];
+    ascii_rom rom1 (.clk(iCLK), .addr(rom_addr1), .data(rom_out1));
+    ascii_rom rom2 (.clk(iCLK), .addr(rom_addr2), .data(rom_out2));
 
-    // line 1 region
-    if(iVga_y >= CENTER_Y1 && iVga_y < CENTER_Y1 + CHAR_H &&
-       iVga_x >= CENTER_X  && iVga_x < CENTER_X + L1_LEN*CHAR_W)
-    begin
-        integer idx = (iVga_x - CENTER_X) >> 3;
-        text_active = 1'b1;
-        current_char = LINE1_STR[(L1_LEN-1-idx)*8 +: 8];
+    wire pixel1 = in_text1 ? rom_out1[7-char_x1] : 1'b0;
+    wire pixel2 = in_text2 ? rom_out2[7-char_x2] : 1'b0;
+
+    // ------------------------------
+    // OUTPUT LOGIC
+    // ------------------------------
+    always @(*) begin
+        if (!iVideo_On) begin
+            // VIDEO OFF - show TEXT2 only
+            if (pixel2)
+                {oRed, oGreen, oBlue} = {WHITE, WHITE, WHITE};
+            else
+                {oRed, oGreen, oBlue} = {BLACK, BLACK, BLACK};
+        end
+        else begin
+            // VIDEO ON - show VIDEO + TEXT1 overlay
+            if (pixel1)
+                {oRed, oGreen, oBlue} = {WHITE, WHITE, WHITE};
+            else if (video_region)
+                {oRed, oGreen, oBlue} = {iRed, iGreen, iBlue};
+            else
+                {oRed, oGreen, oBlue} = {BLACK, BLACK, BLACK};
+        end
     end
-
-    // line 2 region
-    if(iVga_y >= CENTER_Y2 && iVga_y < CENTER_Y2 + CHAR_H &&
-       iVga_x >= CENTER_X  && iVga_x < CENTER_X + L2_LEN*CHAR_W)
-    begin
-        integer idx = (iVga_x - CENTER_X) >> 3;
-        text_active = 1'b1;
-        current_char = LINE2_STR[(L2_LEN-1-idx)*8 +: 8];
-    end
-
-    rom_addr = {current_char, row};
-end
-
-// ---------------------------
-// Pipeline to sync ROM output
-// ---------------------------
-always @(posedge iCLK) begin
-    if(!iRST_N) begin
-        x_d <= 0;
-        y_d <= 0;
-        col_d <= 0;
-        text_active_d <= 0;
-    end else begin
-        x_d <= iVga_x;
-        y_d <= iVga_y;
-        col_d <= col;
-        text_active_d <= text_active;
-    end
-end
-
-wire pixel_on = text_active_d && rom_data[7 - col_d];
-
-// ---------------------------
-// Output RGB
-// ---------------------------
-always @(*) begin
-    if(!iVideo_On) begin
-        oRed = 0;  oGreen = 0;  oBlue = 0;
-    end else if(pixel_on) begin
-        oRed = 10'h3FF;
-        oGreen = 10'h3FF;
-        oBlue = 10'h3FF;
-    end else begin
-        oRed = iRed;
-        oGreen = iGreen;
-        oBlue = iBlue;
-    end
-end
 
 endmodule
