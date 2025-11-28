@@ -1,128 +1,125 @@
+// ======================================================
+//   CENTERED ASCII TEXT OVERLAY USING ascii_rom
+//   Works with your exact ROM interface
+//   Requires exactly 1 cycle of latency compensation
+// ======================================================
+
 module VGA_overlay (
-    input              iCLK,
-    input              iRST_N,
-    input              iVideo_On,
+    input         iCLK,
+    input         iRST_N,
+    input         iVideo_On,
 
-    input      [10:0]  iVga_x,
-    input      [10:0]  iVga_y,
+    input  [10:0] iVga_x,
+    input  [10:0] iVga_y,
 
-    input      [9:0]   iRed,
-    input      [9:0]   iGreen,
-    input      [9:0]   iBlue,
+    input  [9:0]  iRed,
+    input  [9:0]  iGreen,
+    input  [9:0]  iBlue,
 
-    output reg [9:0]   oRed,
-    output reg [9:0]   oGreen,
-    output reg [9:0]   oBlue
+    output reg [9:0]  oRed,
+    output reg [9:0]  oGreen,
+    output reg [9:0]  oBlue
 );
 
-//============================================================
-// PARAMETERS
-//============================================================
-localparam FONT_W = 8;
-localparam FONT_H = 16;
+// ---------------------------
+// Text configuration
+// ---------------------------
+localparam CHAR_W = 8;
+localparam CHAR_H = 16;
 
-// Your output resolution
-localparam SCREEN_W = 640;
-localparam SCREEN_H = 480;
+localparam LINE1_STR = "INTRUDER DETECTED";
+localparam LINE2_STR = "SECURITY ALERT";
 
-//============================================================
-// TEXT LINES (EDIT FREELY)
-//============================================================
-localparam LINE1_LEN = 18;
-localparam LINE2_LEN = 22;
+// Compute string lengths
+localparam L1_LEN = 18;
+localparam L2_LEN = 14;
 
-reg [7:0] LINE1 [0:LINE1_LEN-1];
-reg [7:0] LINE2 [0:LINE2_LEN-1];
+// Center positions
+localparam CENTER_X = 320 - (L1_LEN*CHAR_W)/2;
+localparam CENTER_Y1 = 160;   // line 1 Y
+localparam CENTER_Y2 = 200;   // line 2 Y
 
-initial begin
-    // Center these texts on screen automatically
-    LINE1 = {
-        "I","N","T","R","U","S","I","O","N"," ","D","E","T","E","C","T","E","D"
-    };
+// ---------------------------
+// ROM instance
+// ---------------------------
+wire [7:0] rom_data;
+reg  [10:0] rom_addr_reg;
+reg  [10:0] rom_addr;
 
-    LINE2 = {
-        "S","Y","S","T","E","M"," ","A","C","T","I","V","A","T","E","D"," ","!","!","!"," ", " "
-    };
-end
-
-// Horizontal centering (computed at runtime)
-localparam LINE1_X0 = (SCREEN_W - LINE1_LEN*FONT_W)/2;
-localparam LINE2_X0 = (SCREEN_W - LINE2_LEN*FONT_W)/2;
-
-// Y positions
-localparam LINE1_Y0 = 40;
-localparam LINE2_Y0 = 70;
-
-//============================================================
-// FONT ROM
-//============================================================
-wire [7:0] font_bits;
-reg  [7:0] font_char;
-reg  [3:0] font_row;
-
-font_rom FONT(
-    .char(font_char),
-    .row(font_row),
-    .bits(font_bits)
+ascii_rom rom_inst(
+    .clk(iCLK),
+    .addr(rom_addr),
+    .data(rom_data)
 );
 
-//============================================================
-// DRAW LOGIC
-//============================================================
-reg  text_pixel;
+// Pipeline registers for sync
+reg [2:0]  col_d;
+reg [10:0] x_d, y_d;
+reg        text_active_d;
 
-integer index;
-reg [10:0] rel_x, rel_y;
+// ---------------------------
+// Character generation
+// ---------------------------
+reg [7:0] current_char;
+reg       text_active;
 
+reg [3:0] row;
+reg [2:0] col;
+
+// Determine if inside line1 or line2
 always @(*) begin
-    oRed   = iRed;
-    oGreen = iGreen;
-    oBlue  = iBlue;
+    text_active = 1'b0;
+    current_char = 8'h20; // space
 
-    text_pixel = 0;
+    // default row/col
+    row = iVga_y[3:0];
+    col = iVga_x[2:0];
 
-    //--------------------------------------------------------
-    // Line 1
-    //--------------------------------------------------------
-    if (iVga_y >= LINE1_Y0 && iVga_y < LINE1_Y0 + FONT_H) begin
-        rel_y = iVga_y - LINE1_Y0;
-        if (iVga_x >= LINE1_X0 && iVga_x < LINE1_X0 + LINE1_LEN*FONT_W) begin
-            rel_x = iVga_x - LINE1_X0;
-            index = rel_x / FONT_W;
-
-            font_char = LINE1[index];
-            font_row  = rel_y[3:0];
-
-            if (font_bits[7 - (rel_x % FONT_W)])
-                text_pixel = 1;
-        end
+    // line 1 region
+    if(iVga_y >= CENTER_Y1 && iVga_y < CENTER_Y1 + CHAR_H &&
+       iVga_x >= CENTER_X  && iVga_x < CENTER_X + L1_LEN*CHAR_W)
+    begin
+        integer idx = (iVga_x - CENTER_X) >> 3;
+        text_active = 1'b1;
+        current_char = LINE1_STR[(L1_LEN-1-idx)*8 +: 8];
     end
 
-    //--------------------------------------------------------
-    // Line 2
-    //--------------------------------------------------------
-    if (iVga_y >= LINE2_Y0 && iVga_y < LINE2_Y0 + FONT_H) begin
-        rel_y = iVga_y - LINE2_Y0;
-        if (iVga_x >= LINE2_X0 && iVga_x < LINE2_X0 + LINE2_LEN*FONT_W) begin
-            rel_x = iVga_x - LINE2_X0;
-            index = rel_x / FONT_W;
-
-            font_char = LINE2[index];
-            font_row  = rel_y[3:0];
-
-            if (font_bits[7 - (rel_x % FONT_W)])
-                text_pixel = 1;
-        end
+    // line 2 region
+    if(iVga_y >= CENTER_Y2 && iVga_y < CENTER_Y2 + CHAR_H &&
+       iVga_x >= CENTER_X  && iVga_x < CENTER_X + L2_LEN*CHAR_W)
+    begin
+        integer idx = (iVga_x - CENTER_X) >> 3;
+        text_active = 1'b1;
+        current_char = LINE2_STR[(L2_LEN-1-idx)*8 +: 8];
     end
 
-    //--------------------------------------------------------
-    // If text_pixel ON → draw white text
-    //--------------------------------------------------------
-    if (iVideo_On && text_pixel) begin
-        oRed   = 10'h3FF;
-        oGreen = 10'h3FF;
-        oBlue  = 10'h3FF;
+    rom_addr = {current_char, row};
+end
+
+// ---------------------------
+// Pipeline to sync ROM output
+// ---------------------------
+always @(posedge iCLK) begin
+    if(!iRST_N) begin
+        x_d <= 0;
+        y_d <= 0;
+        col_d <= 0;
+        text_active_d <= 0;
+    end else begin
+        x_d <= iVga_x;
+        y_d <= iVga_y;
+        col_d <= col;
+        text_active_d <= text_active;
     end
 end
 
-endmodule
+wire pixel_on = text_active_d && rom_data[7 - col_d];
+
+// ---------------------------
+// Output RGB
+// ---------------------------
+always @(*) begin
+    if(!iVideo_On) begin
+        oRed = 0;  oGreen = 0;  oBlue = 0;
+    end else if(pixel_on) begin
+        oRed =
