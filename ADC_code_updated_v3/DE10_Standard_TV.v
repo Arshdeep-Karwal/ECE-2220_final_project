@@ -75,7 +75,9 @@ module DE10_Standard_TV(
 
 
       ///////// IR /////////
-      input              SENSE
+      input              SENSE,
+		
+		output 				 BUZZER
 );
 
 
@@ -193,6 +195,8 @@ end
 assign TD_RESET_N	=	1'b1;
 assign LEDR[0] = Video_On;
 assign LEDR[1] = ledON;
+
+assign BUZZER  = Video_On;
 
 // *************************************************
 
