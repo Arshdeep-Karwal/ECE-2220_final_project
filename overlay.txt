@@ -122,4 +122,14 @@ always @(*) begin
     if(!iVideo_On) begin
         oRed = 0;  oGreen = 0;  oBlue = 0;
     end else if(pixel_on) begin
-        oRed =
+        oRed = 10'h3FF;
+        oGreen = 10'h3FF;
+        oBlue = 10'h3FF;
+    end else begin
+        oRed = iRed;
+        oGreen = iGreen;
+        oBlue = iBlue;
+    end
+end
+
+endmodule
