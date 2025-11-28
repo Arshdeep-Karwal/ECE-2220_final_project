@@ -1,3 +1,15 @@
+
+	// VIDEO REGION
+	parameter WIDTH 	 = 550;
+	parameter HEIGHT   = 380;
+	parameter VIDEO_X0 = (640 - WIDTH) / 2;
+	parameter VIDEO_Y0 = TEXT_Y0 + TEXT_HEIGHT + 50;	// 20 px below text
+	
+	wire video_region  = (iVga_x >= VIDEO_X0 & iVga_x < (VIDEO_X0 + WIDTH) &
+								 iVga_y >= VIDEO_Y0 & iVga_y < (VIDEO_Y0 + HEIGHT));
+
+
+
 module VGA_overlay (
     input               iCLK,
     input               iRST_N,
