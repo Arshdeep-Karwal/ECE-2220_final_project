@@ -1,5 +1,5 @@
 Flow report for DE10_Standard_TV
-Wed Nov 26 12:53:18 2025
+Fri Nov 28 09:50:23 2025
 Quartus Prime Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
 
 
@@ -41,19 +41,19 @@ on the Quartus Prime software download page.
 +-----------------------------------------------------------------------------------+
 ; Flow Summary                                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Flow Status                     ; Successful - Wed Nov 26 12:53:07 2025           ;
+; Flow Status                     ; Successful - Fri Nov 28 09:50:02 2025           ;
 ; Quartus Prime Version           ; 25.1std.0 Build 1129 10/21/2025 SC Lite Edition ;
 ; Revision Name                   ; DE10_Standard_TV                                ;
 ; Top-level Entity Name           ; DE10_Standard_TV                                ;
 ; Family                          ; Cyclone V                                       ;
 ; Device                          ; 5CSXFC6D6F31C6                                  ;
 ; Timing Models                   ; Final                                           ;
-; Logic utilization (in ALMs)     ; 647 / 41,910 ( 2 % )                            ;
-; Total registers                 ; 1236                                            ;
+; Logic utilization (in ALMs)     ; 747 / 41,910 ( 2 % )                            ;
+; Total registers                 ; 1283                                            ;
 ; Total pins                      ; 150 / 499 ( 30 % )                              ;
 ; Total virtual pins              ; 0                                               ;
-; Total block memory bits         ; 45,024 / 5,662,720 ( < 1 % )                    ;
-; Total DSP Blocks                ; 6 / 112 ( 5 % )                                 ;
+; Total block memory bits         ; 61,408 / 5,662,720 ( 1 % )                      ;
+; Total DSP Blocks                ; 7 / 112 ( 6 % )                                 ;
 ; Total HSSI RX PCSs              ; 0 / 9 ( 0 % )                                   ;
 ; Total HSSI PMA RX Deserializers ; 0 / 9 ( 0 % )                                   ;
 ; Total HSSI TX PCSs              ; 0 / 9 ( 0 % )                                   ;
@@ -68,7 +68,7 @@ on the Quartus Prime software download page.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 11/26/2025 12:45:31 ;
+; Start date & time ; 11/28/2025 09:38:54 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; DE10_Standard_TV    ;
 +-------------------+---------------------+
@@ -79,7 +79,7 @@ on the Quartus Prime software download page.
 +--------------------------------------+----------------------------------------+---------------+-------------+------------+
 ; Assignment Name                      ; Value                                  ; Default Value ; Entity Name ; Section Id ;
 +--------------------------------------+----------------------------------------+---------------+-------------+------------+
-; COMPILER_SIGNATURE_ID                ; 242190095949523.176418273017924        ; --            ; --          ; --         ;
+; COMPILER_SIGNATURE_ID                ; 242190095949523.176434433309432        ; --            ; --          ; --         ;
 ; ENABLE_SIGNALTAP                     ; Off                                    ; --            ; --          ; --         ;
 ; FITTER_EFFORT                        ; Standard Fit                           ; Auto Fit      ; --          ; --         ;
 ; MAX_CORE_JUNCTION_TEMP               ; 85                                     ; --            ; --          ; --         ;
@@ -111,11 +111,11 @@ on the Quartus Prime software download page.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:16     ; 1.0                     ; 5022 MB             ; 00:00:33                           ;
-; Fitter               ; 00:07:08     ; 1.1                     ; 7837 MB             ; 00:36:00                           ;
-; Assembler            ; 00:00:07     ; 1.0                     ; 5259 MB             ; 00:00:07                           ;
-; Timing Analyzer      ; 00:00:10     ; 2.2                     ; 5461 MB             ; 00:00:14                           ;
-; Total                ; 00:07:41     ; --                      ; --                  ; 00:36:54                           ;
+; Analysis & Synthesis ; 00:00:57     ; 1.0                     ; 5033 MB             ; 00:00:59                           ;
+; Fitter               ; 00:09:46     ; 1.1                     ; 7784 MB             ; 00:46:22                           ;
+; Assembler            ; 00:00:21     ; 1.0                     ; 5259 MB             ; 00:00:13                           ;
+; Timing Analyzer      ; 00:00:19     ; 2.1                     ; 5477 MB             ; 00:00:26                           ;
+; Total                ; 00:11:23     ; --                      ; --                  ; 00:48:00                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

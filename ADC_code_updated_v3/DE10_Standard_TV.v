@@ -430,30 +430,6 @@ VGA_Ctrl			(	//	Host Side
 
 endmodule
 
-	module SlowClock(clk, slow_clk)					;
-	
-		input					clk							;	// 50 MHz clock system clock
-		output	reg 		slow_clk						;	// 1  Hz  slow clock 25_000_000 ~ 1 sec
-
-					reg 		clk_1Hz = 1'b0				;	//	Reset slow clock to "0"
-					reg 		[27:0] counter = 0		;	// 27 bit register to be able to count to 25,000,000
-		
-					integer	clk_count = 50_000	;	
-		
-		
-		always@(posedge clk)
-			begin
-				counter <= counter + 1					;	// Increment counter
-//				if ( counter >= 2)
-				if ( counter >= clk_count )		
-					begin
-						counter <= 0						;	// If counter reaches 50,000,000 / 25,000,000 = 2 edges per period. 
-						slow_clk <= ~slow_clk			;	//	Complimrnt the 1 Hz clock
-					end
-			end
-
-	endmodule
-
 // ============================================================================
 // Copyright (c) 2016 by Terasic Technologies Inc.
 // ============================================================================

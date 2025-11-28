@@ -416,6 +416,10 @@
 					"strict" : false
 				},
 				{
+					"name" : "KEY[1]",
+					"strict" : false
+				},
+				{
 					"name" : "TD_HS",
 					"strict" : false
 				},
