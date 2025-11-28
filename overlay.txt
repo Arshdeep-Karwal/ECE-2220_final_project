@@ -78,23 +78,25 @@ wire in_char =
     (char_y < CHAR_H);
 
 reg pixel_on;
-
 // =============================================================
 // CHARACTER RENDERING (3× scaling)
 // =============================================================
+
+integer L;
+integer fx, fy;
+reg [7:0] row;
 
 always @(*) begin
     pixel_on = 0;
 
     if (in_text_bar && in_char) begin
         // which letter index?
-        integer L = char_x / CHAR_W;
+        L  = char_x / CHAR_W;
 
         // which pixel inside the 8×8 font?
-        integer fx = (char_x % CHAR_W) / SCALE;
-        integer fy = (char_y % CHAR_H) / SCALE;
+        fx = (char_x % CHAR_W) / SCALE;
+        fy = (char_y % CHAR_H) / SCALE;
 
-        reg [7:0] row;
         case (L)
             0: row = font_I[fy];
             1: row = font_N[fy];
@@ -107,10 +109,10 @@ always @(*) begin
             default: row = 0;
         endcase
 
-        // Check bit
         pixel_on = row[7 - fx];
     end
 end
+
 
 // =============================================================
 // FINAL COLOR OUTPUT
