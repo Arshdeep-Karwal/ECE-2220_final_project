@@ -1,147 +1,91 @@
-module VGA_overlay (
-    input               iCLK,
-    input               iRST_N,
-    input               iVideo_On,
+//---------------------------------------------------------
+// SIMPLE NO-PIPELINE ASCII TEXT OVERLAY
+//---------------------------------------------------------
 
-    input      [10:0]   iVga_x,
-    input      [10:0]   iVga_y,
+// 1) TEXT POSITION AND SIZE
+localparam CHAR_W = 8;
+localparam CHAR_H = 16;
 
-    input      [9:0]    iRed,
-    input      [9:0]    iGreen,
-    input      [9:0]    iBlue,
+localparam TEXT_COLS = 16;   // how many characters wide
+localparam TEXT_ROWS = 1;    // one row of text
+localparam TEXT_X0   = 200;  // top-left X of text box
+localparam TEXT_Y0   = 200;  // top-left Y
 
-    output reg [9:0]    oRed,
-    output reg [9:0]    oGreen,
-    output reg [9:0]    oBlue
-);
-
-// =============================================================
-// SIMPLE 1-BIT TEXT MESSAGE ("INTRUDER") — BIG (3×) SCALING
-// =============================================================
-
-// Example 8×8 bitmap font (ASCII I, N, T, R, U, D, E, R)
-// You can replace this with any message or larger font later.
-reg [7:0] font_I [0:7];
-reg [7:0] font_N [0:7];
-reg [7:0] font_T [0:7];
-reg [7:0] font_R [0:7];
-reg [7:0] font_U [0:7];
-reg [7:0] font_D [0:7];
-reg [7:0] font_E [0:7];
+// 2) YOUR TEXT (ASCII CODES)
+reg [7:0] message [0:TEXT_COLS-1];
 
 initial begin
-    font_I[0]=8'b11111111; font_I[1]=8'b00011000; font_I[2]=8'b00011000; font_I[3]=8'b00011000;
-    font_I[4]=8'b00011000; font_I[5]=8'b00011000; font_I[6]=8'b00011000; font_I[7]=8'b11111111;
-
-    font_N[0]=8'b11000011; font_N[1]=8'b11100011; font_N[2]=8'b11010011; font_N[3]=8'b11001011;
-    font_N[4]=8'b11000111; font_N[5]=8'b11000011; font_N[6]=8'b11000011; font_N[7]=8'b11000011;
-
-    font_T[0]=8'b11111111; font_T[1]=8'b00011000; font_T[2]=8'b00011000; font_T[3]=8'b00011000;
-    font_T[4]=8'b00011000; font_T[5]=8'b00011000; font_T[6]=8'b00011000; font_T[7]=8'b00011000;
-
-    font_R[0]=8'b11111100; font_R[1]=8'b11000110; font_R[2]=8'b11000110; font_R[3]=8'b11111100;
-    font_R[4]=8'b11011000; font_R[5]=8'b11001100; font_R[6]=8'b11000110; font_R[7]=8'b11000110;
-
-    font_U[0]=8'b11000011; font_U[1]=8'b11000011; font_U[2]=8'b11000011; font_U[3]=8'b11000011;
-    font_U[4]=8'b11000011; font_U[5]=8'b11000011; font_U[6]=8'b11100111; font_U[7]=8'b01111110;
-
-    font_D[0]=8'b11111000; font_D[1]=8'b11001100; font_D[2]=8'b11000110; font_D[3]=8'b11000110;
-    font_D[4]=8'b11000110; font_D[5]=8'b11000110; font_D[6]=8'b11001100; font_D[7]=8'b11111000;
-
-    font_E[0]=8'b11111111; font_E[1]=8'b11000000; font_E[2]=8'b11000000; font_E[3]=8'b11111100;
-    font_E[4]=8'b11000000; font_E[5]=8'b11000000; font_E[6]=8'b11000000; font_E[7]=8'b11111111;
+    message[0]  = "I";
+    message[1]  = "N";
+    message[2]  = "T";
+    message[3]  = "R";
+    message[4]  = "U";
+    message[5]  = "D";
+    message[6]  = "E";
+    message[7]  = "R";
+    message[8]  = " ";
+    message[9]  = "D";
+    message[10] = "E";
+    message[11] = "T";
+    message[12] = "E";
+    message[13] = "C";
+    message[14] = "T";
+    message[15] = "E";
+    // (up to TEXT_COLS)
 end
 
-// =============================================================
-// TEXT AREA POSITION (black bar + big text)
-// =============================================================
+// 3) LOCATION INSIDE TEXT BLOCK
+wire in_text_region =
+    (iVga_x >= TEXT_X0 && iVga_x < TEXT_X0 + TEXT_COLS*CHAR_W &&
+     iVga_y >= TEXT_Y0 && iVga_y < TEXT_Y0 + CHAR_H);
 
-// Black background bar 0–60 pixels high
-wire in_text_bar = (iVga_y < 60);
+// 4) Character index + pixel row/column inside the character
+wire [7:0] char_index = (iVga_x - TEXT_X0) / CHAR_W;
+wire [3:0] row_in_char = (iVga_y - TEXT_Y0) % CHAR_H;
+wire [2:0] col_in_char = (iVga_x - TEXT_X0) % CHAR_W;
 
-// Each character is 8×8 → we scale to 24×24 (3×)
-localparam SCALE = 3;
+// 5) ROM CONNECTION
+wire [10:0] rom_addr = { message[char_index], row_in_char };
+wire [7:0] rom_data;
 
-// Starting X position for message "INTRUDER"
-localparam TEXT_X = 50;
+ascii_rom FONT_ROM (
+    .clk(iCLK),
+    .addr(rom_addr),
+    .data(rom_data)
+);
 
-// Character widths
-localparam CHAR_W = 8 * SCALE;  // =24
-localparam CHAR_H = 8 * SCALE;  // =24
+// 6) Extract the pixel bit (MSB first)
+wire font_pixel = rom_data[7 - col_in_char];
 
-// Which character column?
-wire [10:0] char_x = iVga_x - TEXT_X;
-wire [10:0] char_y = iVga_y - 20;  // vertically center text in bar
+//---------------------------------------------------------
+// INSERTING THIS INTO YOUR OUTPUT PIPELINE
+//---------------------------------------------------------
 
-wire in_char =
-    (char_x < 8 * 8 * SCALE) &&   // total width of 8 letters scaled
-    (char_y < CHAR_H);
-
-reg pixel_on;
-// =============================================================
-// CHARACTER RENDERING (3× scaling)
-// =============================================================
-
-integer L;
-integer fx, fy;
-reg [7:0] row;
-
-always @(*) begin
-    pixel_on = 0;
-
-    if (in_text_bar && in_char) begin
-        // which letter index?
-        L  = char_x / CHAR_W;
-
-        // which pixel inside the 8×8 font?
-        fx = (char_x % CHAR_W) / SCALE;
-        fy = (char_y % CHAR_H) / SCALE;
-
-        case (L)
-            0: row = font_I[fy];
-            1: row = font_N[fy];
-            2: row = font_T[fy];
-            3: row = font_R[fy];
-            4: row = font_U[fy];
-            5: row = font_D[fy];
-            6: row = font_E[fy];
-            7: row = font_R[fy];
-            default: row = 0;
-        endcase
-
-        pixel_on = row[7 - fx];
+always @(posedge iCLK) begin
+    if (!iRST_N) begin
+        oRed   <= 0;
+        oGreen <= 0;
+        oBlue  <= 0;
     end
-end
-
-
-// =============================================================
-// FINAL COLOR OUTPUT
-// =============================================================
-
-always @(*) begin
-    if (!iVideo_On) begin
-        oRed   = 0;
-        oGreen = 0;
-        oBlue  = 0;
-    end
-    else if (in_text_bar) begin
-        // Black background
-        if (pixel_on) begin
-            oRed   = 10'h3FF;  // White text
-            oGreen = 10'h3FF;
-            oBlue  = 10'h3FF;
-        end else begin
-            oRed   = 10'd0;
-            oGreen = 10'd0;
-            oBlue  = 10'd0;
-        end
+    else if (!iVideo_On) begin
+        // blanking interval
+        oRed   <= 0;
+        oGreen <= 0;
+        oBlue  <= 0;
     end
     else begin
-        // Pass-through camera pixels
-        oRed   = iRed;
-        oGreen = iGreen;
-        oBlue  = iBlue;
+        if (in_text_region && font_pixel)
+        begin
+            // WHITE TEXT
+            oRed   <= 10'h3FF;
+            oGreen <= 10'h3FF;
+            oBlue  <= 10'h3FF;
+        end
+        else begin
+            // Normal video
+            oRed   <= iRed;
+            oGreen <= iGreen;
+            oBlue  <= iBlue;
+        end
     end
 end
-
-endmodule
