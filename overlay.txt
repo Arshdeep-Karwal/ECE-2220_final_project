@@ -1,91 +1,128 @@
-//---------------------------------------------------------
-// SIMPLE NO-PIPELINE ASCII TEXT OVERLAY
-//---------------------------------------------------------
+module VGA_overlay (
+    input              iCLK,
+    input              iRST_N,
+    input              iVideo_On,
 
-// 1) TEXT POSITION AND SIZE
-localparam CHAR_W = 8;
-localparam CHAR_H = 16;
+    input      [10:0]  iVga_x,
+    input      [10:0]  iVga_y,
 
-localparam TEXT_COLS = 16;   // how many characters wide
-localparam TEXT_ROWS = 1;    // one row of text
-localparam TEXT_X0   = 200;  // top-left X of text box
-localparam TEXT_Y0   = 200;  // top-left Y
+    input      [9:0]   iRed,
+    input      [9:0]   iGreen,
+    input      [9:0]   iBlue,
 
-// 2) YOUR TEXT (ASCII CODES)
-reg [7:0] message [0:TEXT_COLS-1];
-
-initial begin
-    message[0]  = "I";
-    message[1]  = "N";
-    message[2]  = "T";
-    message[3]  = "R";
-    message[4]  = "U";
-    message[5]  = "D";
-    message[6]  = "E";
-    message[7]  = "R";
-    message[8]  = " ";
-    message[9]  = "D";
-    message[10] = "E";
-    message[11] = "T";
-    message[12] = "E";
-    message[13] = "C";
-    message[14] = "T";
-    message[15] = "E";
-    // (up to TEXT_COLS)
-end
-
-// 3) LOCATION INSIDE TEXT BLOCK
-wire in_text_region =
-    (iVga_x >= TEXT_X0 && iVga_x < TEXT_X0 + TEXT_COLS*CHAR_W &&
-     iVga_y >= TEXT_Y0 && iVga_y < TEXT_Y0 + CHAR_H);
-
-// 4) Character index + pixel row/column inside the character
-wire [7:0] char_index = (iVga_x - TEXT_X0) / CHAR_W;
-wire [3:0] row_in_char = (iVga_y - TEXT_Y0) % CHAR_H;
-wire [2:0] col_in_char = (iVga_x - TEXT_X0) % CHAR_W;
-
-// 5) ROM CONNECTION
-wire [10:0] rom_addr = { message[char_index], row_in_char };
-wire [7:0] rom_data;
-
-ascii_rom FONT_ROM (
-    .clk(iCLK),
-    .addr(rom_addr),
-    .data(rom_data)
+    output reg [9:0]   oRed,
+    output reg [9:0]   oGreen,
+    output reg [9:0]   oBlue
 );
 
-// 6) Extract the pixel bit (MSB first)
-wire font_pixel = rom_data[7 - col_in_char];
+//============================================================
+// PARAMETERS
+//============================================================
+localparam FONT_W = 8;
+localparam FONT_H = 16;
 
-//---------------------------------------------------------
-// INSERTING THIS INTO YOUR OUTPUT PIPELINE
-//---------------------------------------------------------
+// Your output resolution
+localparam SCREEN_W = 640;
+localparam SCREEN_H = 480;
 
-always @(posedge iCLK) begin
-    if (!iRST_N) begin
-        oRed   <= 0;
-        oGreen <= 0;
-        oBlue  <= 0;
-    end
-    else if (!iVideo_On) begin
-        // blanking interval
-        oRed   <= 0;
-        oGreen <= 0;
-        oBlue  <= 0;
-    end
-    else begin
-        if (in_text_region && font_pixel)
-        begin
-            // WHITE TEXT
-            oRed   <= 10'h3FF;
-            oGreen <= 10'h3FF;
-            oBlue  <= 10'h3FF;
+//============================================================
+// TEXT LINES (EDIT FREELY)
+//============================================================
+localparam LINE1_LEN = 18;
+localparam LINE2_LEN = 22;
+
+reg [7:0] LINE1 [0:LINE1_LEN-1];
+reg [7:0] LINE2 [0:LINE2_LEN-1];
+
+initial begin
+    // Center these texts on screen automatically
+    LINE1 = {
+        "I","N","T","R","U","S","I","O","N"," ","D","E","T","E","C","T","E","D"
+    };
+
+    LINE2 = {
+        "S","Y","S","T","E","M"," ","A","C","T","I","V","A","T","E","D"," ","!","!","!"," ", " "
+    };
+end
+
+// Horizontal centering (computed at runtime)
+localparam LINE1_X0 = (SCREEN_W - LINE1_LEN*FONT_W)/2;
+localparam LINE2_X0 = (SCREEN_W - LINE2_LEN*FONT_W)/2;
+
+// Y positions
+localparam LINE1_Y0 = 40;
+localparam LINE2_Y0 = 70;
+
+//============================================================
+// FONT ROM
+//============================================================
+wire [7:0] font_bits;
+reg  [7:0] font_char;
+reg  [3:0] font_row;
+
+font_rom FONT(
+    .char(font_char),
+    .row(font_row),
+    .bits(font_bits)
+);
+
+//============================================================
+// DRAW LOGIC
+//============================================================
+reg  text_pixel;
+
+integer index;
+reg [10:0] rel_x, rel_y;
+
+always @(*) begin
+    oRed   = iRed;
+    oGreen = iGreen;
+    oBlue  = iBlue;
+
+    text_pixel = 0;
+
+    //--------------------------------------------------------
+    // Line 1
+    //--------------------------------------------------------
+    if (iVga_y >= LINE1_Y0 && iVga_y < LINE1_Y0 + FONT_H) begin
+        rel_y = iVga_y - LINE1_Y0;
+        if (iVga_x >= LINE1_X0 && iVga_x < LINE1_X0 + LINE1_LEN*FONT_W) begin
+            rel_x = iVga_x - LINE1_X0;
+            index = rel_x / FONT_W;
+
+            font_char = LINE1[index];
+            font_row  = rel_y[3:0];
+
+            if (font_bits[7 - (rel_x % FONT_W)])
+                text_pixel = 1;
         end
-        else begin
-            // Normal video
-            oRed   <= iRed;
-            oGreen <= iGreen;
-            oBlue  <= iBlue;
+    end
+
+    //--------------------------------------------------------
+    // Line 2
+    //--------------------------------------------------------
+    if (iVga_y >= LINE2_Y0 && iVga_y < LINE2_Y0 + FONT_H) begin
+        rel_y = iVga_y - LINE2_Y0;
+        if (iVga_x >= LINE2_X0 && iVga_x < LINE2_X0 + LINE2_LEN*FONT_W) begin
+            rel_x = iVga_x - LINE2_X0;
+            index = rel_x / FONT_W;
+
+            font_char = LINE2[index];
+            font_row  = rel_y[3:0];
+
+            if (font_bits[7 - (rel_x % FONT_W)])
+                text_pixel = 1;
         end
+    end
+
+    //--------------------------------------------------------
+    // If text_pixel ON → draw white text
+    //--------------------------------------------------------
+    if (iVideo_On && text_pixel) begin
+        oRed   = 10'h3FF;
+        oGreen = 10'h3FF;
+        oBlue  = 10'h3FF;
     end
 end
+
+endmodule
