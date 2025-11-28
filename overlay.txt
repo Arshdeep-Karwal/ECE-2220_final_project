@@ -1,0 +1,117 @@
+module VGA_overlay (
+    input               iCLK,
+    input               iRST_N,
+    input               iVideo_On,
+
+    input      [10:0]   iVga_x,
+    input      [10:0]   iVga_y,
+
+    input      [9:0]    iRed,
+    input      [9:0]    iGreen,
+    input      [9:0]    iBlue,
+
+    output reg [9:0]    oRed,
+    output reg [9:0]    oGreen,
+    output reg [9:0]    oBlue
+);
+
+    // === COLORS ===
+    localparam WHITE = 10'h3FF;
+    localparam BLACK = 10'h000;
+
+    // === TEXT REGION ===
+    // Entire top area → 64px tall, full width
+    localparam CHAR_W = 8;
+    localparam CHAR_H = 16;
+
+    localparam TEXT_H = 16;
+    localparam TEXT_W = 8 * 17;     // 17 chars in "INTRUDER DETECTED"
+
+    localparam TEXT_X0 = (640 - TEXT_W) / 2;
+    localparam TEXT_Y0 = 40;
+
+    wire text_region = (iVga_x >= TEXT_X0 &&
+                        iVga_x <  TEXT_X0 + TEXT_W &&
+                        iVga_y >= TEXT_Y0 &&
+                        iVga_y <  TEXT_Y0 + CHAR_H);
+
+    // === CHARACTER BUFFER (1 ROW) ===
+    reg [7:0] text[0:16];   // 17 chars wide
+
+    initial begin
+        text[0]  = "I";
+        text[1]  = "N";
+        text[2]  = "T";
+        text[3]  = "R";
+        text[4]  = "U";
+        text[5]  = "D";
+        text[6]  = "E";
+        text[7]  = "R";
+        text[8]  = " ";
+        text[9]  = "D";
+        text[10] = "E";
+        text[11] = "T";
+        text[12] = "E";
+        text[13] = "C";
+        text[14] = "T";
+        text[15] = "E";
+        text[16] = "D";
+    end
+
+    // === CHARACTER INDEXING ===
+    wire [10:0] rel_x = iVga_x - TEXT_X0;
+    wire [10:0] rel_y = iVga_y - TEXT_Y0;
+
+    wire [4:0] col = rel_x / CHAR_W;     // 0–16
+    wire [3:0] row = rel_y / CHAR_H;     // always 0 since text is 1 row
+    wire [2:0] px  = rel_x % CHAR_W;
+    wire [3:0] py  = rel_y % CHAR_H;
+
+    wire [7:0] ascii = (text_region ? text[col] : 8'h20);
+
+    // === FONT ROM ===
+    wire [10:0] rom_addr = {ascii, py};  // ascii * 16 + row
+    wire [7:0] rom_data;
+
+    ascii_rom FONT(
+        .clk(iCLK),
+        .addr(rom_addr),
+        .data(rom_data)
+    );
+
+    wire pixel_on = rom_data[7 - px];   // MSB = leftmost pixel
+
+    // === OUTPUT MUX ===
+    always @(posedge iCLK) begin
+        if (!iRST_N) begin
+            oRed   <= 0;
+            oGreen <= 0;
+            oBlue  <= 0;
+        end else begin
+            if (!iVideo_On) begin
+                // Text only (alarm mode)
+                if (text_region && pixel_on) begin
+                    oRed   <= WHITE;
+                    oGreen <= WHITE;
+                    oBlue  <= WHITE;
+                end else begin
+                    oRed   <= BLACK;
+                    oGreen <= BLACK;
+                    oBlue  <= BLACK;
+                end
+            end else begin
+                // Video + overlay
+                if (text_region && pixel_on) begin
+                    oRed   <= WHITE;
+                    oGreen <= WHITE;
+                    oBlue  <= WHITE;
+                end else begin
+                    oRed   <= iRed;
+                    oGreen <= iGreen;
+                    oBlue  <= iBlue;
+                end
+            end
+        end
+    end
+
+endmodule
