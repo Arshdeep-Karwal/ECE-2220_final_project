@@ -15,73 +15,60 @@ module VGA_overlay (
     output reg [9:0]    oBlue
 );
 
-    // === COLORS ===
+    // ===== COLORS =====
     localparam WHITE = 10'h3FF;
     localparam BLACK = 10'h000;
 
-    // === TEXT REGION ===
-    // Entire top area → 64px tall, full width
+    // ===== FONT SIZE =====
     localparam CHAR_W = 8;
     localparam CHAR_H = 16;
 
-    localparam TEXT_H = 16;
-    localparam TEXT_W = 8 * 17;     // 17 chars in "INTRUDER DETECTED"
+    // ===== TEXT TO DISPLAY ("INTRUDER DETECTED") =====
+    localparam TEXT_LEN = 17;
 
+    reg [7:0] text [0:TEXT_LEN-1];
+
+    initial begin
+        text[0]="I"; text[1]="N"; text[2]="T"; text[3]="R"; text[4]="U";
+        text[5]="D"; text[6]="E"; text[7]="R"; text[8]=" ";
+        text[9]="D"; text[10]="E"; text[11]="T"; text[12]="E";
+        text[13]="C"; text[14]="T"; text[15]="E"; text[16]="D";
+    end
+
+    // ===== CENTER TEXT =====
+    localparam TEXT_W = TEXT_LEN * CHAR_W;
     localparam TEXT_X0 = (640 - TEXT_W) / 2;
     localparam TEXT_Y0 = 40;
 
-    wire text_region = (iVga_x >= TEXT_X0 &&
-                        iVga_x <  TEXT_X0 + TEXT_W &&
-                        iVga_y >= TEXT_Y0 &&
-                        iVga_y <  TEXT_Y0 + CHAR_H);
+    // ===== IS CURRENT PIXEL INSIDE TEXT AREA? =====
+    wire in_region =
+        (iVga_x >= TEXT_X0) &&
+        (iVga_x <  TEXT_X0 + TEXT_W) &&
+        (iVga_y >= TEXT_Y0) &&
+        (iVga_y <  TEXT_Y0 + CHAR_H);
 
-    // === CHARACTER BUFFER (1 ROW) ===
-    reg [7:0] text[0:16];   // 17 chars wide
+    // ===== RELATIVE COORDINATES =====
+    wire [9:0] rel_x = iVga_x - TEXT_X0;
+    wire [9:0] rel_y = iVga_y - TEXT_Y0;
 
-    initial begin
-        text[0]  = "I";
-        text[1]  = "N";
-        text[2]  = "T";
-        text[3]  = "R";
-        text[4]  = "U";
-        text[5]  = "D";
-        text[6]  = "E";
-        text[7]  = "R";
-        text[8]  = " ";
-        text[9]  = "D";
-        text[10] = "E";
-        text[11] = "T";
-        text[12] = "E";
-        text[13] = "C";
-        text[14] = "T";
-        text[15] = "E";
-        text[16] = "D";
-    end
+    wire [6:0] char_index = rel_x / CHAR_W;
+    wire [2:0] bit_addr   = rel_x % CHAR_W;
+    wire [3:0] row_addr   = rel_y[3:0];
 
-    // === CHARACTER INDEXING ===
-    wire [10:0] rel_x = iVga_x - TEXT_X0;
-    wire [10:0] rel_y = iVga_y - TEXT_Y0;
-
-    wire [4:0] col = rel_x / CHAR_W;     // 0–16
-    wire [3:0] row = rel_y / CHAR_H;     // always 0 since text is 1 row
-    wire [2:0] px  = rel_x % CHAR_W;
-    wire [3:0] py  = rel_y % CHAR_H;
-
-    wire [7:0] ascii = (text_region ? text[col] : 8'h20);
-
-    // === FONT ROM ===
-    wire [10:0] rom_addr = {ascii, py};  // ascii * 16 + row
+    // ===== ASCII ROM =====
+    wire [7:0] ascii_code = (in_region ? text[char_index] : 8'h20);
+    wire [10:0] rom_addr  = {ascii_code, row_addr};
     wire [7:0] rom_data;
 
-    ascii_rom FONT(
+    ascii_rom rom (
         .clk(iCLK),
         .addr(rom_addr),
         .data(rom_data)
     );
 
-    wire pixel_on = rom_data[7 - px];   // MSB = leftmost pixel
+    wire pixel = rom_data[7 - bit_addr];
 
-    // === OUTPUT MUX ===
+    // ===== OUTPUT PIXEL =====
     always @(posedge iCLK) begin
         if (!iRST_N) begin
             oRed   <= 0;
@@ -89,22 +76,16 @@ module VGA_overlay (
             oBlue  <= 0;
         end else begin
             if (!iVideo_On) begin
-                // Text only (alarm mode)
-                if (text_region && pixel_on) begin
-                    oRed   <= WHITE;
-                    oGreen <= WHITE;
-                    oBlue  <= WHITE;
+                // Text only
+                if (in_region && pixel) begin
+                    oRed=oGreen=oBlue=WHITE;
                 end else begin
-                    oRed   <= BLACK;
-                    oGreen <= BLACK;
-                    oBlue  <= BLACK;
+                    oRed=oGreen=oBlue=BLACK;
                 end
             end else begin
-                // Video + overlay
-                if (text_region && pixel_on) begin
-                    oRed   <= WHITE;
-                    oGreen <= WHITE;
-                    oBlue  <= WHITE;
+                // Video with overlay text
+                if (in_region && pixel) begin
+                    oRed=oGreen=oBlue=WHITE;
                 end else begin
                     oRed   <= iRed;
                     oGreen <= iGreen;
