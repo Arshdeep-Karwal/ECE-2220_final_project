@@ -1,37 +1,38 @@
 module VGA_overlay (
-    input                 iCLK,
-    input                 iRST_N,
-    input                 iVideo_On,
+    input               iCLK,
+    input               iRST_N,
+    input               iVideo_On,
 
-    input       [10:0]    iVga_x,
-    input       [10:0]    iVga_y,
+    input       [10:0]  iVga_x,
+    input       [10:0]  iVga_y,
 
-    input       [9:0]     iRed,
-    input       [9:0]     iGreen,
-    input       [9:0]     iBlue,
+    input       [9:0]   iRed,
+    input       [9:0]   iGreen,
+    input       [9:0]   iBlue,
 
-    output reg  [9:0]     oRed,
-    output reg  [9:0]     oGreen,
-    output reg  [9:0]     oBlue
+    output reg  [9:0]   oRed,
+    output reg  [9:0]   oGreen,
+    output reg  [9:0]   oBlue
 );
 
     // ----------------------
     // Parameters
+    // New character size: 16x32 (2x scaled from 8x16)
     // ----------------------
     parameter WHITE = 10'h3FF;
     parameter BLACK = 10'h000;
-    parameter CHAR_WIDTH = 8;
-    parameter CHAR_HEIGHT = 16;
+    parameter CHAR_WIDTH = 16;  // Doubled from 8
+    parameter CHAR_HEIGHT = 32; // Doubled from 16
 
     // Text strings
     localparam VIDEO_ON_TEXT = "INTRUDER";
     localparam VIDEO_OFF_TEXT = "ARMED";
 
-    localparam VIDEO_ON_LEN  = 8;  // length of "INTRUDER"
-    localparam VIDEO_OFF_LEN = 5;  // length of "ARMED"
+    localparam VIDEO_ON_LEN  = 8;
+    localparam VIDEO_OFF_LEN = 5;
 
     // ----------------------
-    // Compute text position (centered)
+    // Compute text position (centered - uses new CHAR_WIDTH and CHAR_HEIGHT)
     // ----------------------
     wire [10:0] text_x0_on  = (640 - (VIDEO_ON_LEN * CHAR_WIDTH)) / 2;
     wire [10:0] text_y0_on  = 25;
@@ -49,15 +50,24 @@ module VGA_overlay (
                        (iVga_y >= text_y0_off && iVga_y < text_y0_off + CHAR_HEIGHT);
 
     // ----------------------
-    // Compute character index & pixel inside character
+    // Compute character index & pixel inside character (uses new 16x32 bounds)
     // ----------------------
-    wire [2:0] char_x = (iVideo_On ? (iVga_x - text_x0_on)  : (iVga_x - text_x0_off))  % CHAR_WIDTH;
-    wire [3:0] char_y = (iVideo_On ? (iVga_y - text_y0_on)  : (iVga_y - text_y0_off))  % CHAR_HEIGHT;
+    // char_x_full (0 to 15)
+    wire [3:0] char_x_full = (iVideo_On ? (iVga_x - text_x0_on)  : (iVga_x - text_x0_off))  % CHAR_WIDTH;
+    // char_y_full (0 to 31)
+    wire [4:0] char_y_full = (iVideo_On ? (iVga_y - text_y0_on)  : (iVga_y - text_y0_off))  % CHAR_HEIGHT;
 
+    // Low-resolution 8x16 coordinates for ROM lookup (Pixel Doubling)
+    // By using bits [3:1] of char_x_full, the LSB (bit 0) is ignored, doubling the width.
+    wire [2:0] char_x_low = char_x_full[3:1]; // 8-pixel index (0 to 7)
+    // By using bits [4:1] of char_y_full, the LSB (bit 0) is ignored, doubling the height.
+    wire [3:0] char_y_low = char_y_full[4:1]; // 16-row index (0 to 15)
+
+    // Character index is based on the 16-pixel width
     wire [2:0] char_idx = (iVideo_On ? (iVga_x - text_x0_on)  : (iVga_x - text_x0_off)) / CHAR_WIDTH;
 
     // ----------------------
-    // Select ASCII code for current character
+    // Select ASCII code for current character (same logic)
     // ----------------------
     reg [6:0] ascii_code;
     always @* begin
@@ -89,8 +99,9 @@ module VGA_overlay (
 
     // ----------------------
     // ASCII ROM address and output
+    // Use the low-resolution row for addressing
     // ----------------------
-    wire [10:0] rom_addr = {ascii_code, char_y};
+    wire [10:0] rom_addr = {ascii_code, char_y_low};
     wire [7:0] rom_out;
 
     ascii_rom rom(
@@ -98,11 +109,13 @@ module VGA_overlay (
         .data(rom_out)
     );
 
-    wire pixel_on = iVideo_On ? (in_text_on && rom_out[7 - char_x]) :
-                                (!iVideo_On && in_text_off && rom_out[7 - char_x]);
+    // rom_out[7 - char_x_low] gets the pixel state for the low-res 8x16 character.
+    // This state is then used across 2x2 screen pixels.
+    wire pixel_on = iVideo_On ? (in_text_on && rom_out[7 - char_x_low]) :
+                                 (!iVideo_On && in_text_off && rom_out[7 - char_x_low]);
 
     // ----------------------
-    // VGA output
+    // VGA output (remains the same)
     // ----------------------
     always @* begin
         if(pixel_on) begin
@@ -111,6 +124,12 @@ module VGA_overlay (
             oBlue  = WHITE;
         end
         else begin
+            // NOTE: The original code outputs BLACK here, meaning the area *around* the text
+            // but *inside* the text box is also BLACK. To show the original video in the
+            // background, you should use:
+            // oRed   = iRed;
+            // oGreen = iGreen;
+            // oBlue  = iBlue;
             oRed   = BLACK;
             oGreen = BLACK;
             oBlue  = BLACK;
