@@ -134,18 +134,7 @@ module VGA_overlay (
     wire [7:0] rom_out1;
     wire [7:0] rom_out2;
 
-    ascii_rom ascii_rom_1 (
-        .clk(iCLK),
-        .addr(rom_addr1),
-        .data(rom_out1)
-    );
-
-    ascii_rom ascii_rom_2 (
-        .clk(iCLK),
-        .addr(rom_addr2),
-        .data(rom_out2)
-    );
-
+ 
     // pipeline and sampling
     always @(posedge iCLK or negedge iRST_N) begin
         if (!iRST_N) begin
@@ -187,9 +176,23 @@ module VGA_overlay (
         end
     end
 
+	    ascii_rom ascii_rom_1 (
+        .clk(iCLK),
+        .addr(rom_addr1),
+        .data(rom_out1)
+    );
+
+    ascii_rom ascii_rom_2 (
+        .clk(iCLK),
+        .addr(rom_addr2),
+        .data(rom_out2)
+    );
+	 
     // pixel bits (derived from ROM data and char_x delayed)
-    wire pixel1 = (in1_s2) ? rom_data1_s2[7 - char_x1_s2] : 1'b0;
-    wire pixel2 = (in2_s2) ? rom_data2_s2[7 - char_x2_s2] : 1'b0;
+//    wire pixel1 = (text_region) ? rom_out1[7 - char_x1_s2] : 1'b0;
+//    wire pixel2 = (in2_s2) ? rom_out2[7 - char_x2_s2] : 1'b0;
+		wire pixel1 = rom_out1[char_x1_s2];
+		wire pixel2 = rom_out2[char_x2_s2];
 	
 	// VIDEO REGION
 	parameter WIDTH 	 = 550;
@@ -217,10 +220,10 @@ module VGA_overlay (
 			if (!iVideo_On) begin
 				// TEXT ONLY
 				
-				if (pixel2) begin
-					oRed	 <= 0;
-					oGreen <= TEXT_GREEN;
-					oBlue  <= 0;
+				if (text_region & pixel2) begin
+					oRed	 <= TEXT_COLOR;
+					oGreen <= TEXT_COLOR;
+					oBlue  <= TEXT_COLOR;
 				
 				end else begin
 					oRed	 <= BACKGROUND_COLOR;
@@ -231,10 +234,10 @@ module VGA_overlay (
 		
 			else begin
 				// VIDEO FEED IS ON 
-				if (pixel1) begin
-					oRed   <= TEXT_RED;
-					oGreen <= 0;
-					oBlue  <= 0;
+				if (text_region2 & pixel1) begin
+					oRed   <= TEXT_COLOR;
+					oGreen <= TEXT_COLOR;
+					oBlue  <= TEXT_COLOR;
 				end
 				else if (video_region) begin
 					oRed   <= iRed;
