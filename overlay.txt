@@ -111,6 +111,9 @@ module VGA_overlay (
 	 reg [6:0] ascii_code2;
 	 
     always @* begin
+		ascii_code = 7'h20;
+		ascii_code2 = 7'h20;
+		
         if(iVideo_On && in_text_on) begin
             case(char_idx)
                 0: ascii_code = "I";
