@@ -15,79 +15,131 @@ module VGA_overlay (
     output reg [9:0]    oBlue
 );
 
-    // ===== COLORS =====
-    localparam WHITE = 10'h3FF;
-    localparam BLACK = 10'h000;
+// =============================================================
+// SIMPLE 1-BIT TEXT MESSAGE ("INTRUDER") — BIG (3×) SCALING
+// =============================================================
 
-    // ===== FONT SIZE =====
-    localparam CHAR_W = 8;
-    localparam CHAR_H = 16;
+// Example 8×8 bitmap font (ASCII I, N, T, R, U, D, E, R)
+// You can replace this with any message or larger font later.
+reg [7:0] font_I [0:7];
+reg [7:0] font_N [0:7];
+reg [7:0] font_T [0:7];
+reg [7:0] font_R [0:7];
+reg [7:0] font_U [0:7];
+reg [7:0] font_D [0:7];
+reg [7:0] font_E [0:7];
 
-    // ===== TEXT TO DISPLAY ("INTRUDER DETECTED") =====
-    localparam TEXT_LEN = 17;
+initial begin
+    font_I[0]=8'b11111111; font_I[1]=8'b00011000; font_I[2]=8'b00011000; font_I[3]=8'b00011000;
+    font_I[4]=8'b00011000; font_I[5]=8'b00011000; font_I[6]=8'b00011000; font_I[7]=8'b11111111;
 
-    reg [7:0] text [0:TEXT_LEN-1];
+    font_N[0]=8'b11000011; font_N[1]=8'b11100011; font_N[2]=8'b11010011; font_N[3]=8'b11001011;
+    font_N[4]=8'b11000111; font_N[5]=8'b11000011; font_N[6]=8'b11000011; font_N[7]=8'b11000011;
 
-    initial begin
-        text[0]="I"; text[1]="N"; text[2]="T"; text[3]="R"; text[4]="U";
-        text[5]="D"; text[6]="E"; text[7]="R"; text[8]=" ";
-        text[9]="D"; text[10]="E"; text[11]="T"; text[12]="E";
-        text[13]="C"; text[14]="T"; text[15]="E"; text[16]="D";
+    font_T[0]=8'b11111111; font_T[1]=8'b00011000; font_T[2]=8'b00011000; font_T[3]=8'b00011000;
+    font_T[4]=8'b00011000; font_T[5]=8'b00011000; font_T[6]=8'b00011000; font_T[7]=8'b00011000;
+
+    font_R[0]=8'b11111100; font_R[1]=8'b11000110; font_R[2]=8'b11000110; font_R[3]=8'b11111100;
+    font_R[4]=8'b11011000; font_R[5]=8'b11001100; font_R[6]=8'b11000110; font_R[7]=8'b11000110;
+
+    font_U[0]=8'b11000011; font_U[1]=8'b11000011; font_U[2]=8'b11000011; font_U[3]=8'b11000011;
+    font_U[4]=8'b11000011; font_U[5]=8'b11000011; font_U[6]=8'b11100111; font_U[7]=8'b01111110;
+
+    font_D[0]=8'b11111000; font_D[1]=8'b11001100; font_D[2]=8'b11000110; font_D[3]=8'b11000110;
+    font_D[4]=8'b11000110; font_D[5]=8'b11000110; font_D[6]=8'b11001100; font_D[7]=8'b11111000;
+
+    font_E[0]=8'b11111111; font_E[1]=8'b11000000; font_E[2]=8'b11000000; font_E[3]=8'b11111100;
+    font_E[4]=8'b11000000; font_E[5]=8'b11000000; font_E[6]=8'b11000000; font_E[7]=8'b11111111;
+end
+
+// =============================================================
+// TEXT AREA POSITION (black bar + big text)
+// =============================================================
+
+// Black background bar 0–60 pixels high
+wire in_text_bar = (iVga_y < 60);
+
+// Each character is 8×8 → we scale to 24×24 (3×)
+localparam SCALE = 3;
+
+// Starting X position for message "INTRUDER"
+localparam TEXT_X = 50;
+
+// Character widths
+localparam CHAR_W = 8 * SCALE;  // =24
+localparam CHAR_H = 8 * SCALE;  // =24
+
+// Which character column?
+wire [10:0] char_x = iVga_x - TEXT_X;
+wire [10:0] char_y = iVga_y - 20;  // vertically center text in bar
+
+wire in_char =
+    (char_x < 8 * 8 * SCALE) &&   // total width of 8 letters scaled
+    (char_y < CHAR_H);
+
+reg pixel_on;
+
+// =============================================================
+// CHARACTER RENDERING (3× scaling)
+// =============================================================
+
+always @(*) begin
+    pixel_on = 0;
+
+    if (in_text_bar && in_char) begin
+        // which letter index?
+        integer L = char_x / CHAR_W;
+
+        // which pixel inside the 8×8 font?
+        integer fx = (char_x % CHAR_W) / SCALE;
+        integer fy = (char_y % CHAR_H) / SCALE;
+
+        reg [7:0] row;
+        case (L)
+            0: row = font_I[fy];
+            1: row = font_N[fy];
+            2: row = font_T[fy];
+            3: row = font_R[fy];
+            4: row = font_U[fy];
+            5: row = font_D[fy];
+            6: row = font_E[fy];
+            7: row = font_R[fy];
+            default: row = 0;
+        endcase
+
+        // Check bit
+        pixel_on = row[7 - fx];
     end
+end
 
-    // ===== CENTER TEXT =====
-    localparam TEXT_W = TEXT_LEN * CHAR_W;
-    localparam TEXT_X0 = (640 - TEXT_W) / 2;
-    localparam TEXT_Y0 = 40;
+// =============================================================
+// FINAL COLOR OUTPUT
+// =============================================================
 
-    // ===== IS CURRENT PIXEL INSIDE TEXT AREA? =====
-    wire in_region =
-        (iVga_x >= TEXT_X0) &&
-        (iVga_x <  TEXT_X0 + TEXT_W) &&
-        (iVga_y >= TEXT_Y0) &&
-        (iVga_y <  TEXT_Y0 + CHAR_H);
-
-    // ===== RELATIVE COORDINATES =====
-    wire [9:0] rel_x = iVga_x - TEXT_X0;
-    wire [9:0] rel_y = iVga_y - TEXT_Y0;
-
-    wire [6:0] char_index = rel_x / CHAR_W;
-    wire [2:0] bit_addr   = rel_x % CHAR_W;
-    wire [3:0] row_addr   = rel_y[3:0];
-
-    // ===== ASCII ROM =====
-    wire [7:0] ascii_code = (in_region ? text[char_index] : 8'h20);
-    wire [10:0] rom_addr  = {ascii_code, row_addr};
-    wire [7:0] rom_data;
-
-    ascii_rom rom (
-        .clk(iCLK),
-        .addr(rom_addr),
-        .data(rom_data)
-    );
-
-    wire pixel = rom_data[7 - bit_addr];
-
-    // ===== OUTPUT PIXEL =====
-    always @(*) begin
+always @(*) begin
     if (!iVideo_On) begin
-        oRed   = 10'd0;
-        oGreen = 10'd0;
-        oBlue  = 10'd0;
+        oRed   = 0;
+        oGreen = 0;
+        oBlue  = 0;
     end
-    else if (iVga_x < 100 && iVga_y < 50) begin
-        // WHITE TEXT AREA
-        oRed   = WHITE;
-        oGreen = WHITE;
-        oBlue  = WHITE;
+    else if (in_text_bar) begin
+        // Black background
+        if (pixel_on) begin
+            oRed   = 10'h3FF;  // White text
+            oGreen = 10'h3FF;
+            oBlue  = 10'h3FF;
+        end else begin
+            oRed   = 10'd0;
+            oGreen = 10'd0;
+            oBlue  = 10'd0;
+        end
     end
     else begin
-        // PASS THROUGH CAMERA DATA
+        // Pass-through camera pixels
         oRed   = iRed;
         oGreen = iGreen;
         oBlue  = iBlue;
     end
 end
-
 
 endmodule
