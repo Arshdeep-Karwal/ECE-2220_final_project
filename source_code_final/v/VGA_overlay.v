@@ -21,9 +21,9 @@ module VGA_overlay (
 	// VIDEO FEED REGION
 	// ==============================
 	parameter WIDTH 	 			= 600;
-	parameter HEIGHT   			= 480 - VIDEO_Y0;
-	parameter VIDEO_X0 			= (640 - WIDTH) / 2;	// X starting position
-	parameter VIDEO_Y0 			= 100;						// Y starting position
+	parameter HEIGHT   			= 480 - TEXT_Y0;
+	parameter VIDEO_X0 			= (640 - WIDTH) / 2;						// X starting position
+	parameter VIDEO_Y0 			= TEXT_Y0 + CHAR_HEIGHT + 15;		// Y starting position
 
 	wire video_region  			= (iVga_x >= VIDEO_X0 & iVga_x < (VIDEO_X0 + WIDTH) &
 											iVga_y >= VIDEO_Y0 & iVga_y < (VIDEO_Y0 + HEIGHT));
@@ -39,17 +39,17 @@ module VGA_overlay (
 	// ==============================
 	// LETTERS OUTPUT 
 	// ==============================
-	// VIDEO ON ("ARMED")
-	parameter CHAR_WIDTH 		= 16;  
-	parameter CHAR_HEIGHT 		= 32; 
+	// VIDEO ON ("INTRUDER")
+	parameter CHAR_WIDTH 		= 32;  
+	parameter CHAR_HEIGHT 		= 64; 
 	parameter VIDEO_OFF_LEN 	= 5;
 
 	parameter [10:0] TEXT_X0  	= (640 - (VIDEO_ON_LEN * CHAR_WIDTH)) / 2;	// Centered Horizontally
-	parameter [10:0] TEXT_Y0  	= 60;
+	parameter [10:0] TEXT_Y0  	= 30;
 
-	// VIDEO OFF ("INTRUDER")
-	parameter CHAR_WIDTH2 		= 32;  
-	parameter CHAR_HEIGHT2 		= 64; 
+	// VIDEO OFF ("ARMED")
+	parameter CHAR_WIDTH2 		= 64;  
+	parameter CHAR_HEIGHT2 		= 128; 
 	parameter VIDEO_ON_LEN  	= 8;
 
 	parameter [10:0] TEXT_X02 	= (640 - (VIDEO_OFF_LEN * CHAR_WIDTH2)) / 2; // Centered Horizontally
@@ -67,13 +67,13 @@ module VGA_overlay (
 										  (iVga_y >= TEXT_Y02 && iVga_y < (TEXT_Y02 + CHAR_HEIGHT2));
 
 
-	 // Video ON (Displays a 16 x 32 output text "INTRUDER")
-	 wire [3:0] char_x_full 	= (iVga_x - TEXT_X0)  % CHAR_WIDTH;
-	 wire [4:0] char_y_full 	= (iVga_y - TEXT_Y0)  % CHAR_HEIGHT;
+	 // Video ON (Displays a 32 x 64 output text "INTRUDER")
+	 wire [4:0] char_x_full 	= (iVga_x - TEXT_X0)  % CHAR_WIDTH;
+	 wire [5:0] char_y_full 	= (iVga_y - TEXT_Y0)  % CHAR_HEIGHT;
 
 	// Finds in ASCII ROM by ignoring LSB
-	 wire [2:0] char_x_low 		= char_x_full[3:1]; 
-	 wire [3:0] char_y_low 		= char_y_full[4:1]; 
+	 wire [2:0] char_x_low 		= char_x_full[4:2]; 
+	 wire [3:0] char_y_low 		= char_y_full[5:2]; 
 
 	 
 	 // Character index is based on the 16-pixel width
@@ -81,13 +81,13 @@ module VGA_overlay (
 		 
 	 
 	 
-	 // Video ON (Displays a 32 x 64 output text "ARMED")
-	 wire [4:0] char_x_full2 	= (iVga_x - TEXT_X02)  % CHAR_WIDTH2;
-    wire [5:0] char_y_full2 	= (iVga_y - TEXT_Y02) % CHAR_HEIGHT2;
+	 // Video ON (Displays a 64 x 128 output text "ARMED")
+	 wire [5:0] char_x_full2 	= (iVga_x - TEXT_X02)  % CHAR_WIDTH2;
+    wire [6:0] char_y_full2 	= (iVga_y - TEXT_Y02) % CHAR_HEIGHT2;
 
     // Finds in ASCII ROM by ignoring 2 of the most LSB
-    wire [2:0] char_x_low2 	= char_x_full2[4:2];
-    wire [3:0] char_y_low2 	= char_y_full2[5:2]; 
+    wire [2:0] char_x_low2 	= char_x_full2[5:3];
+    wire [3:0] char_y_low2 	= char_y_full2[6:3]; 
 
     // Character index is based on the 32-pixel width
     wire [2:0] char_idx2 		= (iVga_x - TEXT_X02) / CHAR_WIDTH2;
@@ -209,4 +209,4 @@ module VGA_overlay (
             end
         end
     end
-endmodule
+endmodule 
